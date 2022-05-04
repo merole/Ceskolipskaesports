@@ -1,0 +1,59 @@
+<!-- Included -->
+<% let player = locals.user.name == locals.match.player1 ? 1 : 2; if ((player == 1 && locals.match.comment1 == null) || (player == 2 && locals.match.comment2 == null) ) { %>
+    <div class="flex flex-col p-2 border-2 border-slate-900 rounded-md w-full text-sm md:text-lg self-center mt-6 lg:w-8/12">
+        <form action="/cr/upload" method="post" enctype="multipart/form-data">
+            <div class="flex my-1">
+                <span class="w-1/3 cr-div"> Hráč 1 </span>
+                <div class="w-1/3 cr-div">Čas dohrání</div>
+                <div class="w-1/3 cr-div">Hráč 2</div>
+            </div>
+            <div class="flex my-1">
+                <div class="w-1/3 cr-div">
+                    <%= locals.match.player1 %> 
+                </div>
+                <div class="w-1/3 cr-div">
+                    <%= locals.match.maxDate %>
+                </div>
+                <div class="w-1/3 cr-div">
+                    <%= locals.match.player2 %>
+                </div>
+            </div>
+            <div class="flex my-1">
+                <span class="w-1/3 cr-div">Discord tag </span>
+                <div class="w-1/3 cr-div">/</div>
+                <div class="w-1/3 cr-div">Discord tag </div>
+            </div>
+            <div class="flex my-1">
+                <div class="w-1/3 cr-div">
+                    <%= locals.match.discord1 %> 
+                </div>
+                <div class="w-1/3 cr-div">
+                    
+                </div>
+                <div class="w-1/3 cr-div">
+                    <%= locals.match.discord2 %>
+                </div>
+            </div>
+            <div class="flex my-1">
+                <div class="w-full cr-div">
+                    <input type="file" name="img" accept="image/*" class="form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Nahrát obrázek" required> 
+                </div>
+            </div>
+            <div class="flex my-1">
+                <div class="w-full cr-div">
+                    <input type="text" name="comment" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Přidat komentář" rows="2"> 
+                </div>
+            </div>
+            <div class="flex my-1">
+                <div class="w-1/2 cr-div">
+                    <button name="win" type="submit" class="inline-block px-6 py-2.5 text-white text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out bg-black hover:bg-gray-600  font-bold w-full h-full"> Prohlásit vítězství </button>
+                </div>
+                <div class="w-1/2 cr-div">
+                    <button type="submit" class="inline-block px-6 py-2.5 text-white text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out bg-black hover:bg-gray-600  font-bold w-full h-full"> Prohlásit prohru </button>
+                </div>
+            </div>
+            <input class="hidden" name="user" value="<%= locals.user.name %>"></input>
+            <input class="hidden" name="id" value="<%= locals.match._id %>"></input>
+        </form>
+    </div>
+<% } %>

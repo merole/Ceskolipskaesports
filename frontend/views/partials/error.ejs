@@ -1,0 +1,21 @@
+<%- include('../partials/head.ejs') %>  
+<title>Nastavit nové heslo</title>
+<meta name="robots" content="noindex" />
+</head>
+
+
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/home_navbar.ejs', {user: null}) %>
+    <div class="w-full bg-grey-500">
+        <div class="container mx-auto py-8">
+            <div class="w-96 mx-auto bg-white rounded shadow">
+                <% if(locals.message) { %>
+                    <%- include("messages", {message: locals.message, type: "error"}); %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<body class="flex flex-col h-screen bg-white min-h-full">
+              

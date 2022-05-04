@@ -1,0 +1,98 @@
+<%- include('../partials/head.ejs') %>  
+    <title>ČESKOLIPSKÁ ESPORTS</title>
+    <meta name="description" content="Pořádáme turnaje v e-sportech hlavně pro studenty. Právě se odehrává turnaj v Clash Royale!" >
+</head>
+
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+        <p class="font-openSans text-5xl sm:text-5xl xl:text-8xl font-[700] my-5 w-full text-center">ČESKOLIPSKÁ ESPORTS</p>
+        <p class="w-full sm:w-5/12 font-normal text-lg sm:text-2xl text-center font-exo ">Pořádámé a vysíláme turnaje (ne)jen v e-sportech</p>
+        <img src="/static/images/logo.png" class="flex aspect-square w-[300px] -mt-10 -mb-14 sm:hidden">
+    </div>
+    
+    <div class="flex relative bg-white items-center justify-center font-montserrat mb-16">
+        <div class="grid grid-cols-1 w-[80%] max-w-[80%] sm:w-7/12 self-center bg-slate-50 md:grid-cols-1 justify-items-center">
+            <div class="col-span-1 sm:w-8/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded-lg shadow-lg bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50">
+                <a href="/minecraft">
+                    <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                        <img class="object-top w-full aspect-square shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/static/images/minecraft.png">
+                        <div class="absolute leading-[2rem] top-10 left-6 text-[40px] text-white">Minecraft</div>
+                        <div class="absolute bottom-14 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Klini pro info k turnaji</div>
+                    </div>
+                    <div class="border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                        <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Začátek turnaje v <span class="ml-1 text-gray-500 text-ms">půli dubna</span>
+                            </div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Pavouk bude zde!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-span-1 sm:w-8/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded-lg shadow-lg bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50">
+                <a href="/overwatch/pavouk">
+                    <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                        <img class="object-top w-full aspect-square shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/static/images/overwatch_1.png">
+                        <div class="absolute leading-[2rem] top-10 left-6 text-[40px] text-white">Overwatch</div>
+                        <div class="absolute bottom-14 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Klini pro play-off tabulku!</div>
+                    </div>
+                    <div class="border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                        <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Vítěz turnaje: <span class="ml-1 text-gray-500 text-ms">curanki</span>
+                            </div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Pavouk zde
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-span-1 sm:w-8/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded-lg shadow-lg bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50">
+                <a href="/valorant/archive_2022">
+                    <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                        <img class="w-full aspect-square object-top shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/static/images/Valorant_art1.jpg">
+                        <div class="absolute top-10 left-6 text-[40px] text-white leading-[1.5rem]">Valorant</div>
+                        <div class="absolute bottom-14 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
+                    </div>
+                    <div class="border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                        <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Počet týmů: <span class="ml-1 text-gray-500 text-ms"> 8 </span>
+                            </div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Vyhrál: <span class="ml-1 text-gray-500 text-ms"> curanki</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex relative items-center justify-center font-montserrat bg-slate-300">
+        <div class="grid grid-cols-2 w-full sm:w-9/12 self-center xl:grid-cols-4 justify-items-center bg-slate-300 py-4">
+            <div class="col-span-1 content-center">
+                <a href="https://www.instagram.com/ceskolipska_esports/">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/static/images/instagram.svg">
+                    <p class="text-center text-rose-800">Sledujte Výsledky!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://discord.com/invite/3NDZfuk5jp">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/static/images/discord.svg">
+                    <p class="text-center text-rose-800">Připojte se!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://www.twitch.tv/ceskolipskaesports">
+                    <img class="overflow-hidden w-[150px] sm:tra hover:scale-[1.05] transform transition duration-500" src="/static/images/twitch.svg">
+                    <p class="text-center text-rose-800">Sledujte live!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://www.youtube.com/channel/UCGlbsEZRBzkPfsZrkbsCAGA">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/static/images/youtube.svg">
+                    <p class="text-center text-rose-800">Zkoukněte záznamy!</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>

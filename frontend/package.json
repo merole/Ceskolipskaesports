@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "frontend for ceskolipska esport site",
+  "main": "postcss.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "npx tailwindcss -i ./input.css -o ./static/styles/output.css --watch"
+  },
+  "author": "merole",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.4.7",
+    "flowbite": "^1.4.7"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.2"
+  }
+}

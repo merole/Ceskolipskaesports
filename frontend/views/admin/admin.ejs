@@ -1,0 +1,24 @@
+<%- include('../partials/head.ejs') %>  
+<meta name="robots" content="noindex" />
+</head>
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/adm_navbar.ejs') %>
+    <div class="flex flex-col justify-center items-center">
+        <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Manuální přidání zápasu, <span class="font-bold">NEPOUŽÍVAT!</span>. Používejte pouze skutečná jména pro testování, potom mi napište ať záznam vymažu</div>
+        <form action="/admin/add-match" method="post">
+            <input name="player1"  class="items-center justify-center" placeholder="player1">
+            <input name="player2"  class="items-center justify-center" placeholder="player2">
+            <input type="datetime-local" name="maxDate" class="items-center justify-center" placeholder="Max date"> 
+            <button type="submit">Submit</button>
+            <input type="hidden" name="admin" value="<%= admin.name %>"> 
+        </form>
+        <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Rozhodnutí výsledku zápasu, pokud není komentář potřeba zásadně NIC nepřidávejte, v speciálních případech VŽDY přidejte komentář. Výsledek odejde mailem</div>
+        <div class="flex justify-center">
+            <div class="flex flex-col justify-center items-center bg-gradient-to-bl from-slate-300 to-gray-400">
+                <% matches.forEach(match => { %>
+                    <%- include('../partials/adm_match.ejs', {match: match}) %>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,18 @@
+<% if(locals.message && locals.message != "") { if(locals.type == "alert" || !locals.type) { message = locals.message.toString(); %>
+        <div class="bg-red-300 rounded-lg py-2 px-4 mb-2 text-base text-red-700 border border-red-900 text-center"> <%= message %> 
+            <% if (message.includes("Pros")) { %>
+                <form action="/users/send-email" method="post">
+                    <button type=submit class="link">Odeslat znovu</button>
+                </form>
+            <% } %>
+        </div>
+    <% } else if(locals.type == "primary") { %>
+        <div class="bg-sky-300 rounded-lg py-2 px-4 mb-2 text-base text-blue-800 border border-sky-900 text-center"> <%= message %> 
+            <% if (message.includes("Pros")) { message = locals.message.toString(); %>
+                <form action="/users/send-email" method="post">
+                    <button type=submit class="link">Odeslat znovu</button>
+                </form>
+            <% } %>
+        </div>
+    <% } %>
+<% } %>

@@ -1,0 +1,66 @@
+<%- include('../partials/head.ejs') %>  
+<title>Profil uživatele</title>
+<meta name="description" content="Uživatelský profil">
+</head>
+
+    <body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="flex items-center justify-center">
+        <div class="flex flex-col self-center w-8/12 my-6">
+            <% if (locals.messages && locals.messages.length > 0) {locals.messages.forEach(message => { %>
+                <%- include("../partials/messages", {message: message, type: locals.type}) %>
+            <% });} %>
+            <p class="text-[30px] font-bold"> Uživatel <%= locals.user.name %> </p>
+            <br>
+            <p class="text-[25px]"> Tvůj profil </p>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg place-self-start w-1/2 my-3 min-w-fit">
+                <table class="text-sm text-left text-gray-500 dark:text-gray-400 ">
+                    <thead>
+                        <tr>
+                          <th class="w-11/12"></th>
+                          <th class="w-1/12"></th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900">
+                                Jméno
+                            </th>
+                            <td class="px-6 py-0 font-medium text-gray-900">
+                                <%= locals.user.name %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900">
+                                E-mail
+                            </th>
+                            <td class="px-6 py-0 font-medium text-gray-900">
+                                <%= locals.user.email %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900">
+                                Discord tag
+                            </th>
+                            <td class="px-6 py-0 font-medium text-gray-900">
+                                <%= locals.user.discord %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div>
+                <a href="/user/settings" type="button" class="w-3/12 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Změna údajů</a>
+            </div>
+            <% if (locals.playing) { %>
+                <p class="text-[25px]"> Tvoje zápasy </p>
+            <% } %>
+            <% if(locals.matches) {matches.forEach(match => { if (match.result == "unfinished") {%>
+                <%- include('../partials/cr', {user:user, match: match}) %>  
+            <% } });} %>
+            
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>

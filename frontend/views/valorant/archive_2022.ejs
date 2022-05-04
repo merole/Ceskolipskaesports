@@ -1,0 +1,53 @@
+<%- include('../partials/head.ejs') %>  
+<title>Přihlášení</title>
+<meta name="description" content="Turnaj vyhrál tým Curanki. Celý turnaj byl odstreramován na Twitchi a nakonec se konalo slavnostní předání cen.">
+</head>
+
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="flex flex-col flex-1 items-center">
+        <div class="sm:w-5/12 flex flex-col space-y-7">
+            <div class="t1 ml-0 mt-12 text-center bg-gradient-to-r pt-3">Valorant: 2022</div>
+            <div class="t3 ml-0">
+                <span class="font-semibold">Druhý turnaj byl ve hře Valorant, který měl sice menší hráčskou účast, ale mnohem větší diváckou účast na Twitchi.</span><br>Celkem 8 týmů se na přelomu dubna a května utkalo ve virtuálním světě, aby rozhodlo, kdo je ten nejlepší. Po 3 týdnech bojů, ve kterých všechny týmy bojovali, co to šlo se do Superfinále trunaje dostaly dva týmy BUNGA team a Curanki. Curanki nakonec vyhráli a BUNGA team tak skončili po blízké bitvě až druzí. Svoji čest obhájili také Pragováci, kterým se podařilo urvat 3. místo. <br>
+            </div>
+            <img src="/static/images/2022_scoreboard.jpg" class="border-0.5 shadow-sm rounded-lg sm:hover:scale-150 hover:shadow-2xl hover:transition-all">
+            <div class="t3 ml-0">
+                Po turnaji se většina týmů sešla v Proseckém amfiteátru na předání cen a poděkování. Hlavní cenou byl 3D tištěný pohár a všichni účastníci dostali medaile a nějakou mlsku 😋. Fotky si můžete prohlédnout v galerii.
+            </div>
+            
+            <div id="default-carousel" class="relative pt-4 py-6" data-carousel="static">
+                <!-- Carousel wrapper -->
+                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                    <!-- Item 1 -->
+                    <%     locals.files.forEach(function (file) { %>
+                        <%- include('../partials/carousel_item', {image: `/static/images/val-ceny/${file}`}) %>  
+                    <% });  %>
+                <!-- Slider indicators -->
+                <div class="absolute z-30 flex space-x-2 -translate-x-1/2 bottom-5 left-1/2">
+                    <button type="button" class="w-1 h-1 rounded-full bg-white dark:bg-gray-800" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                    <%     for (let i=1;i<locals.files.length;i++) { %>
+                        <%- include('../partials/carousel_slide_to', {num: i}) %>  
+                    <% };  %>
+                </div>
+                <!-- Slider controls -->
+                <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev="">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none duration-75">
+                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next="">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none duration-75">
+                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+</body>
+
+</body>
