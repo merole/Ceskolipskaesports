@@ -1,0 +1,36 @@
+Description
+===========
+
+Connect to RCON to a source dedicated server using node.js.
+
+
+Requirements
+============
+* [node.js](http://nodejs.org/) -- v0.4.7+
+
+Usage
+============
+
+var rcon = require("./rcon.js");
+
+new rcon.RCon('127.0.1.1', 27016, function(e) {
+	if (e) {
+		throw e;
+	}
+	
+	this.auth('rcon_pass', function( e ){
+		if (e) {
+			throw e;
+		}
+		
+		this.send('status', function(val){
+			console.log("Server status: " + val );
+		} );
+		
+	} );
+} );
+
+
+Reminders
+==============
+If the response message is too big, it is going to get split in multiple return calls
