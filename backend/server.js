@@ -1,12 +1,23 @@
 const { Server, Socket } = require("socket.io");
+const { createAdapter } = require("@socket.io/postgres-adapter");
+const { Pool } = require("pg");
 const express = require("express");
+require('dotenv').config();
 
 const app = express();
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http);                                                                                              
 
 
-const port = 80;
+const port = 90;
+
+io.on('connection', function(socket) {
+    console.log("User connected");
+    socket.on('Disconnect', () => {
+        console.log("User disconnected");
+    })
+
+})
 
 
 

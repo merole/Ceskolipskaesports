@@ -9,6 +9,23 @@
       @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
     </style>
   <body>
-    
+    <div>>
+      <input type="text" name="" id="login">
+      <button id="login_button">Login</button>
+    </div>
+
+    <script>
+      let socket;
+
+      let button = document.getElementById("login_button");
+
+      button.addEventListener("click", (e) => {
+        login();
+      })
+
+      let login = () => {
+        socket = io()
+      }
+    </script>
   </body>
 </html>
