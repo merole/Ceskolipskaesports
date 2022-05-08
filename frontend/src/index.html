@@ -9,22 +9,71 @@
       @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
     </style>
   <body>
-    <div>>
-      <input type="text" name="" id="login">
-      <button id="login_button">Login</button>
+    <div id="login" class="flex flex-col place-content-center items-center">
+      <input type="text" name="" id="login_name" class="place-content-center items-center">
+      <input type="text" name="" id="login_pass" class="place-content-center items-center">
+      <button id="register_instead" class="place-content-center place-items-center">Register instead</button>
+      <button id="login_button" class="place-content-center place-items-center">Login</button>
     </div>
 
-    <script>
-      let socket;
+    <div id="login" class="flex flex-col place-content-center items-center">
+      <input type="text" name="" id="login_name" class="place-content-center items-center">
+      <input type="text" name="" id="login_pass" class="place-content-center items-center">
+      <button id="register_instead" class="place-content-center place-items-center">Register instead</button>
+      <button id="login_button" class="place-content-center place-items-center">Login</button>
+    </div>
 
-      let button = document.getElementById("login_button");
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var crypto = require('crypto'); 
+      let socket;
+      
+      let login_screen = document.getElementById("login");
+      let login_name = document.getElementById("login_text");
+      let login_button = document.getElementById("login_button");
+      let register_instead = document.getElementById("register_instead");
+
+      let login_screen_visible = (display) => {
+        if (display) {
+          if (login_screen.classList.contains("hidden")) {
+            login_screen.classList.remove("hidden");
+          }
+        } else {
+          if (!login_screen.classList.contains("hidden")) {
+            login_screen.classList.add("hidden");
+          }
+        }
+      };
+
+      let register_screen_visible = (display) => {
+        if (display) {
+          if (login_screen.classList.contains("hidden")) {
+            login_screen.classList.remove("hidden");
+          }
+        } else {
+          if (!login_screen.classList.contains("hidden")) {
+            login_screen.classList.add("hidden");
+          }
+        }
+      };
+
 
       button.addEventListener("click", (e) => {
         login();
       })
 
+      register_instead.addEventListener("click", (e) => {
+        
+      })
+
       let login = () => {
-        socket = io()
+        socket = io();
+        
+        socket.on("connect", () => {
+          console.log(login_text.value + " connected");
+        })
+
+        socket.emit("login", {name: login_text.value, pass_hash: login_pass})
       }
     </script>
   </body>

@@ -1,7 +1,8 @@
 const { Server, Socket } = require("socket.io");
-const { createAdapter } = require("@socket.io/postgres-adapter");
 const { Pool } = require("pg");
 const express = require("express");
+const mongoose = require('mongoose'); 
+var crypto = require('crypto'); 
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,7 @@ io.on('connection', function(socket) {
     socket.on('Disconnect', () => {
         console.log("User disconnected");
     })
+
 
 })
 
