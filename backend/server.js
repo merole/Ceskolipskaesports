@@ -13,10 +13,15 @@ const io = require("socket.io")(http);
 const port = 90;
 
 io.on('connection', function(socket) {
+
     console.log("User connected");
     socket.on('Disconnect', () => {
         console.log("User disconnected");
-    })
+    });
+
+    socket.on("login", (data) => {
+
+    });
 
 
 })

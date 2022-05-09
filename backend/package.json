@@ -11,11 +11,12 @@
   "author": "merole",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongoose": "^6.3.2",
     "pg": "^8.7.3",
-    "socket.io": "^4.4.1",
+    "socket.io": "^4.5.0",
     "srcds": "0.0.1",
     "tailwindcss": "^3.0.23"
   },
