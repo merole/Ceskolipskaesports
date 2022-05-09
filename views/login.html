@@ -10,22 +10,10 @@
     </style>
   <body>
     <div id="login" class="flex flex-col place-content-center items-center">
-      <input type="text" name="" id="login_name" class="place-content-center items-center">
-      <input type="text" name="" id="login_pass" class="place-content-center items-center">
+      <input type="text" name="" id="login_name" class="place-content-center items-center" placeholder="Username">
+      <input type="text" name="" id="login_pass" class="place-content-center items-center" placeholder="Password">
       <button id="login_button" class="place-content-center place-items-center">Login</button>
       <button id="register_instead" class="place-content-center place-items-center">Register instead</button>
-    </div>
-
-    <div id="register" class="flex flex-col place-content-center items-center hidden">
-      <input type="text" name="" id="register_name" class="place-content-center items-center">
-      <input type="text" name="" id="register_pass" class="place-content-center items-center">
-      <input type="text" name="" id="register_pass_check" class="place-content-center items-center">
-      <button id="register button" class="place-content-center place-items-center">Login</button>
-      <button id="login_instead" class="place-content-center place-items-center">Login instead</button>
-    </div>
-
-    <div id="home_page_usr" class="flex flex-col place-content-center items-center hidden">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos nisi, corrupti voluptates magnam modi et, natus nam consequuntur consequatur nostrum omnis labore officiis doloribus aliquam vel assumenda aut commodi nesciunt!
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -40,13 +28,6 @@
       let login_button = document.getElementById("login_button");
       let register_instead = document.getElementById("register_instead");
 
-      let register_screen = document.getElementById("register");
-      let register_text1 = document.getElementById("register_name");
-      let register_pass = document.getElementById("register_pass");
-      let register_pass1 = document.getElementById("register_pass_chceck");
-      let login_instead = document.getElementById("login_instead");
-
-      let home_page = document.getElementById("home_page_usr");
 
       let screen_visible = (display, page) => {
         if (display) {
@@ -65,13 +46,11 @@
       });
 
       register_instead.addEventListener("click", (e) => {
-        screen_visible(true, register_screen);
-        screen_visible(false, login_screen);
+
       });
 
       login_instead.addEventListener("click", (e) => {
-        screen_visible(false, register_screen);
-        screen_visible(true, login_screen);
+
       });
       
 
