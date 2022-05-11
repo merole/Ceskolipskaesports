@@ -5,20 +5,23 @@ const User = require('../models/user.js');
 var crypto = require('crypto'); 
 require('dotenv').config();
 
-router.post("/login", (req, res, next) => {
+router.post("/api/login", (req, res, next) => {
     
     const {name, password} = req.body;
 
-    User.find( { name: name})
+    User.find( { name: name })
       .then((result) => {
-        if (result.pass == crypto.pbkdf2Sync(password, result.salt, 1000, 64, process.env.PASS_HASH).toString(`hex`)) {
-            res.redirect("")
+        // TODO this shouldnt have ore than one element
+        for (i of result) {
+          console.log(i);
+          if (i.pass == crypto.pbkdf2Sync(password, i.salt, 1000, 64, process.env.PASS_HASH).toString(`hex`)) {
+              res.redirect("/users/home")
+          }
         }
-      })
-    res.send("this will be a login handler, that redirects to a userpage");
+      });
 });
 
-router.post("/register", (req, res, next) => {
+router.post("/api/register", (req, res, next) => {
 
     // req body
     const {name, email, password, password2} = req.body;

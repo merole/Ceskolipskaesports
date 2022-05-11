@@ -10,7 +10,7 @@
     </style>
   <body>
     <div id="login" class="">
-      <form action="users/login" method="post" class="flex flex-col place-content-center items-center">
+      <form action="users/api/login" method="post" class="flex flex-col place-content-center items-center">
         <input type="text" name="name" id="login_name" class="place-content-center items-center">
         <input type="text" name="password" id="login_pass" class="place-content-center items-center">
         <button type="submit" id="login_button" name="login_button" class="place-content-center place-items-center">Login</button>
@@ -19,7 +19,7 @@
     </div>
 
     <div id="register" class="hidden">
-      <form action="users/register" method="post" class="flex flex-col place-content-center items-center">
+      <form action="users/api/register" method="post" class="flex flex-col place-content-center items-center">
         <input type="text" name="name" id="register_name" class="place-content-center items-center" placeholder="name">
         <input type="text" name="email" id="register_name" class="place-content-center items-center" placeholder="email">
         <input type="text" name="password" id="register_pass" class="place-content-center items-center" placeholder="pass">
