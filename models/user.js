@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema({
     salt: {
         type: String,
         required: true
+    },
+    active: {
+        type: Boolean,
+        required: true
     }
 }, {timestamps: true });
 

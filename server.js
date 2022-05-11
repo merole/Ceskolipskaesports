@@ -24,6 +24,6 @@ mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology : true})
 
 // Routers
 app.use('/users', require('./routes/users'));
+app.use('/', require('./routes/index'));
 
-app.use(express.static(__dirname + "/static"));
-app.get("/", (req, res) => res.render("index"));
+app.use(express.static("static"));

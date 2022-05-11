@@ -1,0 +1,37 @@
+<%- include('partials/head.ejs') %>
+
+  <body>
+    <div class="w-full bg-grey-500">
+        <div class="container mx-auto py-8">
+            <div class="w-96 mx-auto bg-white rounded shadow">
+                <div class="mx-16 py-4 px-8 text-black text-xl font-bold border-b border-grey-500 text-center">Registrace</div>
+                <div id="register" class="">
+                    <form action="/users/register" method="post" class="flex flex-col place-content-center items-center">
+                        <div class="py-2 px-4">
+                            <label class="block text-grey-darker text-sm font-bold mb-2">Vaše uživatelské jméno</label>
+                            <input type="text" name="name" id="register_name" class="place-content-center items-center" placeholder="name" value="<%= typeof name != 'undefined' ? name : '' %>">
+                        </div>
+                        <div class="py-2 px-4">
+                            <label class="block text-grey-darker text-sm font-bold mb-2">Váš e-mail</label>
+                            <input type="text" name="email" id="register_email" class="place-content-center items-center" placeholder="email" value="<%= typeof email != 'undefined' ? name : '' %>">
+                        </div>
+                        <div class="py-2 px-4">
+                            <label class="block text-grey-darker text-sm font-bold mb-2">Vaše heslo</label>
+                            <input type="password" name="password" id="register_pass" class="place-content-center items-center" placeholder="pass" value="<%= typeof name != 'undefined' ? name : '' %>">
+                        </div>
+                        <div class="py-2 px-4">
+                            <label class="block text-grey-darker text-sm font-bold mb-2">Vaše heslo znovu</label>
+                            <input type="password" name="password2" id="register_pass_check" class="place-content-center items-center" placeholder="pass2" value="<%= typeof name != 'undefined' ? name : '' %>">
+                        </div>
+                        <div class="py-2 px-4 place-content-center">
+                            <button type="submit" id="register button" class="mb-2 mx-16 rounded-full py-1 px-24 text-center font-bold bg-gradient-to-r from-green-400 to-blue-500  hover:from-blue-500 hover:to-green-400">REGISTROVAT</button> <br>
+                            <a id="login_instead" class="mb-2 mx-16 rounded-full py-1 px-24" href="/login">Login instead</a>
+                        </div>
+                        <%- include("./partials/messages") %>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

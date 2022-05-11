@@ -1,0 +1,13 @@
+<%- include('partials/head.ejs') %>
+
+  <body>
+    <div id="login" class="">
+      <form action="/users/login" method="post" class="flex flex-col place-content-center items-center">
+        <input type="text" name="name" id="login_name" class="place-content-center items-center">
+        <input type="password" name="password" id="login_pass" class="place-content-center items-center">
+        <button type="submit" id="login_button" name="login_button" class="place-content-center place-items-center">Login</button>
+        <a type="button" id="register_instead" name="register_instead" class="place-content-center place-items-center" href="/register">Register instead</a>
+      </form>
+    </div>
+   </body>
+</html>
