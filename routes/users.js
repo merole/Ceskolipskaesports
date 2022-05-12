@@ -4,17 +4,49 @@ const { Server, Socket } = require("socket.io");
 const User = require('../models/user.js');
 var crypto = require('crypto'); 
 require('dotenv').config();
+const { google } = require("googleapis");
 let nodemailer = require('nodemailer');
+const OAuth2 = google.auth.OAuth2;
 //------
 
-//Mail setup
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASS
-  }
-});
+//Mail setup required by register
+
+// Setup for transporter
+async function createTransporter() {
+  const oauth2Client = new OAuth2(
+    process.env.OAUTH_CLIENTID,
+    process.env.OAUTH_CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground"
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: process.env.OAUTH_REFRESH_TOKEN
+  });
+
+  const accessToken = await new Promise((resolve, reject) => {
+    oauth2Client.getAccessToken((err, token) => {
+      if (err) {
+        reject("Failed to create access token :(");
+      }
+      resolve(token);
+    });
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: process.env.EMAIL,
+      accessToken,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    }
+  });
+
+  return transporter;
+};
+
 
 router.post("/login", (req, res, next) => {
     
@@ -51,23 +83,21 @@ router.post("/register", (req, res, next) => {
     );
 
     let errors = [];
-    
+    console.log(User.exists({ email: email }));
     if(!name || !email || !password || !password2) {
-      errors.push({type: "error", msg: "Please fill in all fields"})
+      errors.push({type: "bg-red-700	", msg: "Please fill in all fields"})
     } 
-    if (User.find({ email: email })._id) {
-      errors.push({type: "error", msg: "Email already in use"});
-      User.find({ email: email }).then((result) => {console.log(result + "email fail")} );
+    if (User.exists({ email: email })) {
+      errors.push({type: "bg-red-700	", msg: "Email already in use"});
     }
-    if (User.find({ name: name })._id) {
-      errors.push({type: "error", msg: "Username already in use"});
-      User.find({ name: name }).then((result) => {console.log(result + "name fail")} )
+    if (User.exists({ name: name })) {
+      errors.push({type: "bg-red-700	", msg: "Username already in use"});
     }
     if (password !== password2) {
-      errors.push({type: "error", msg: "Passwords don't match"});
+      errors.push({type: "bg-red-700	", msg: "Passwords don't match"});
     }
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      errors.push({type: "error", msg: "Invalid email adress"});
+      errors.push({type: "bg-red-700	", msg: "Invalid email adress"});
     }
 
     if (errors.length > 0) {
@@ -83,7 +113,7 @@ router.post("/register", (req, res, next) => {
       let mail_options;
 
       user.save()
-      .then((console.log("Posteed" + name)))
+      .then((console.log("Posted" + name)))
       .then(res.redirect("/login"))
       .then(User.find( { name: name }))
       .then((result) => {
@@ -92,23 +122,27 @@ router.post("/register", (req, res, next) => {
         i = result;
         id = i._id;
         mail_options = {
-          from: process.env.MAIL,
+          from: process.env.EMAIL,
           to: email,
           subject: 'Potvrďte svůj účet',
-          text: "Potvrďte zde: " + process.env.URL + "users/confirm/" + id
+          text: "Potvrďte zde: " + process.env.URL + "users/confirm/?id=" + id
         }
-        transporter.sendMail(mail_options, (error, info) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('New user: ' + name + " Info: " + info.response);
-          }
-        });
 
+        // Use only with transporter
+        const sendEmail = async (emailOptions) => {
+          let emailTransporter = await createTransporter();
+          await emailTransporter.sendMail(emailOptions);
+        };
+        
+        sendEmail(mail_options);
         }
       );
       
     }
+});
+
+router.post("/confirm", (req, res, next) => {
+  res.render("confirm");
 });
 
 module.exports = router;

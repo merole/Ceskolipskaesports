@@ -1,5 +1,5 @@
 <% if(typeof messages != 'undefined') { %>
 <% messages.forEach((e) => { %>
-    <p> <%= e.msg %> </p>
+    <p class=" <%= e.type %> "> <%= e.msg %> </p>
 <%  }); %>
 <% } %>
