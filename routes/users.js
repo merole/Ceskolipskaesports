@@ -1,17 +1,26 @@
+// @ts-check
+
 const express = require('express');
 const router = express.Router();
 const { Server, Socket } = require("socket.io");
 const User = require('../models/user.js');
-var crypto = require('crypto'); 
+var bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy
 require('dotenv').config();
 const { google } = require("googleapis");
 let nodemailer = require('nodemailer');
 const OAuth2 = google.auth.OAuth2;
+const url = require("url");
+const passport = require('passport');
 //------
+
+// Passport setup required by login
+const initializePassport = require('../modules/auth_init');
+initializePassport(passport);
 
 //Mail setup required by register
 
-// Setup for transporter
+// Setup for transporter for sending confim emails
 async function createTransporter() {
   const oauth2Client = new OAuth2(
     process.env.OAUTH_CLIENTID,
@@ -47,20 +56,10 @@ async function createTransporter() {
   return transporter;
 };
 
-
-router.post("/login", (req, res, next) => {
-    
-    const {name, password} = req.body;
-
-    User.find( { name: name })
-      .then((result) => {
-          i = result[0]
-          console.log(i);
-          if (i.pass == crypto.pbkdf2Sync(password, i.salt, 1000, 64, process.env.PASS_HASH).toString(`hex`) && i.active) {
-              res.redirect("/users/home")
-          }
-      });
-});
+router.post("/login", passport.authenticate('local', {
+  successRedirect: '/users',
+  failureRedirect: '/login'
+}));
 
 router.post("/register", (req, res, next) => {
 
@@ -68,29 +67,29 @@ router.post("/register", (req, res, next) => {
     const {name, email, password, password2} = req.body;
 
      // Creating a unique salt for a particular user 
-    let salt = crypto.randomBytes(16).toString('hex'); 
+    const salt = bcrypt.genSaltSync(1000);
   
      // Hashing user's salt and password with 1000 iterations, 
-    hash = crypto.pbkdf2Sync(password, salt, 1000, 64, process.env.PASS_HASH).toString(`hex`);
+    let hash = bcrypt.hashSync(password, salt);
+
     const user = new User(
         {
             name: name,
             email: email,
             password: hash,
-            salt: salt,
             active: false
         }
     );
 
     let errors = [];
-    console.log(User.exists({ email: email }));
+    console.log(User.exists( {email: "hhh" }, (err) => {if(err) {console.log(err);}}));
     if(!name || !email || !password || !password2) {
       errors.push({type: "bg-red-700	", msg: "Please fill in all fields"})
     } 
-    if (User.exists({ email: email })) {
+    if (User.exists({ email: email }, (err) => {if(err) {console.log(err);}})) {
       errors.push({type: "bg-red-700	", msg: "Email already in use"});
     }
-    if (User.exists({ name: name })) {
+    if (User.exists({ name: name }, (err) => {if(err) {console.log(err);}})) {
       errors.push({type: "bg-red-700	", msg: "Username already in use"});
     }
     if (password !== password2) {
@@ -117,9 +116,7 @@ router.post("/register", (req, res, next) => {
       .then(res.redirect("/login"))
       .then(User.find( { name: name }))
       .then((result) => {
-        console.log("-----------");
-        console.log(result);
-        i = result;
+        let i = result;
         id = i._id;
         mail_options = {
           from: process.env.EMAIL,
@@ -131,7 +128,7 @@ router.post("/register", (req, res, next) => {
         // Use only with transporter
         const sendEmail = async (emailOptions) => {
           let emailTransporter = await createTransporter();
-          await emailTransporter.sendMail(emailOptions);
+          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log(err)}});
         };
         
         sendEmail(mail_options);
@@ -141,7 +138,9 @@ router.post("/register", (req, res, next) => {
     }
 });
 
-router.post("/confirm", (req, res, next) => {
+router.get("/confirm", (req, res, next) => {
+  let params = url.parse(req.url,true).query;
+  User.findByIdAndUpdate(params.id, { $set: {active: true}});
   res.render("confirm");
 });
 
