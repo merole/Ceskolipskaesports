@@ -1,10 +1,7 @@
 module.exports = {
-  content: ["../frontend/src/**/*.{html,js}"],
+  content: ["./static/styles/*"],
   theme: {
     extend: {
-      fontFamily: {
-        Marker: ["Permanent Marker"],
-      },
     },
   },
   plugins: [],

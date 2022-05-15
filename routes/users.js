@@ -1,26 +1,28 @@
 // @ts-check
-
+// Packages
 const express = require('express');
-const router = express.Router();
-const { Server, Socket } = require("socket.io");
 const User = require('../models/user.js');
-var bcrypt = require('bcrypt');
-const LocalStrategy = require('passport-local').Strategy
-require('dotenv').config();
+const flash = require('connect-flash');
+const crypto = require('crypto');
 const { google } = require("googleapis");
-let nodemailer = require('nodemailer');
-const OAuth2 = google.auth.OAuth2;
+const nodemailer = require('nodemailer');
 const url = require("url");
+const router = express.Router();
 const passport = require('passport');
+// This is proably required
+const LocalStrategy = require('passport-local').Strategy;
+require('../modules/init')(passport);
+
+
+require('dotenv').config();
 //------
 
-// Passport setup required by login
-const initializePassport = require('../modules/auth_init');
-initializePassport(passport);
+// Passport setup used by login and protected urls
 
-//Mail setup required by register
 
 // Setup for transporter for sending confim emails
+const OAuth2 = google.auth.OAuth2;
+
 async function createTransporter() {
   const oauth2Client = new OAuth2(
     process.env.OAUTH_CLIENTID,
@@ -56,27 +58,28 @@ async function createTransporter() {
   return transporter;
 };
 
-router.post("/login", passport.authenticate('local', {
-  successRedirect: '/users',
-  failureRedirect: '/login'
-}));
+router.post('/login',
+  passport.authenticate("user", { 
+    failureRedirect: "/login", 
+    successRedirect: "/home",
+    failureFlash: true })
+);
 
 router.post("/register", (req, res, next) => {
 
     // req body
     const {name, email, password, password2} = req.body;
-
+    let salt = crypto.randomBytes(32).toString('hex');
+    let hash = crypto.pbkdf2Sync(password, salt, 10000, 64, process.env.PASS_HASH).toString("hex");
      // Creating a unique salt for a particular user 
-    const salt = bcrypt.genSaltSync(1000);
-  
-     // Hashing user's salt and password with 1000 iterations, 
-    let hash = bcrypt.hashSync(password, salt);
+
 
     const user = new User(
         {
             name: name,
             email: email,
             password: hash,
+            salt: salt,
             active: false
         }
     );
@@ -143,5 +146,11 @@ router.get("/confirm", (req, res, next) => {
   User.findByIdAndUpdate(params.id, { $set: {active: true}});
   res.render("confirm");
 });
+
+router.get('/logout',(req,res)=>{
+  req.logout();
+  req.flash('success_msg','Now logged out');
+  res.redirect('/users/login'); 
+  })
 
 module.exports = router;

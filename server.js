@@ -1,34 +1,52 @@
 // @ts-check
-
-const { Server, Socket } = require("socket.io");
-const { Pool } = require("pg");
+// Packages
 const express = require("express");
 const mongoose = require('mongoose'); 
-var crypto = require('crypto');
-const { db } = require("./models/user");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+
 require('dotenv').config();
-const passport = require('passport')
+//-------
 
 //app init
 const app = express();
 app.use(express.urlencoded({extended : false}));
 app.set("view engine", "ejs");
-const http = require("http").Server(app);
-const io =  require("socket.io")(http);    
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 //mongoose
-let cluster_pass = process.env.CLUSTER_PASS;
-let cluster_uname = process.env.CLUSTER_NAME;
-let db_name1 = process.env.DB_NAME1
-const URI = "mongodb+srv://" + cluster_uname + ":" + cluster_pass + "@cr-user.9uma6.mongodb.net/" + db_name1 + "?retryWrites=true&w=majority";
-mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology : true})
-.then(() => http.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT} and connected to DB!`)))
+const db_string = process.env.DB_STRING
+// @ts-ignore
+mongoose.connect(db_string, {useNewUrlParser: true, useUnifiedTopology : true})
+.then(() => app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT} and connected to DB!`)))
 .catch((err)=> console.log(err));                                                                                
+
+// Session middleware setup, this is used by protected URLs, such as /home in users.js
+let sessionStore = MongoStore.create({
+    mongoUrl: db_string,
+    collectionName: "sessions",
+});
+app.use(
+    session({
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: true,
+      store: sessionStore,
+    })
+  );
+  app.use(passport.authenticate('session'));
+
+// Passport setup for login and cookies
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // Routers
 app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/index'));
-
-// Passport setup for login and cookies
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(express.static("static"));
+app.use('/admin', require('./routes/admin'));

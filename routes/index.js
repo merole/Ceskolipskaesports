@@ -1,18 +1,46 @@
+// @ts-check
+// Packages
 const express = require('express');
 const router = express.Router();
-require('dotenv').config();
 const passport = require('passport');
+const User = require('../models/user.js');
+const Match = require('../models/match.js');
+
+require('dotenv').config();
+//-------
 
 
 router.get('/login', (req, res) => {
-    res.render('login');
+  console.log(req);
+  // For some reason passport.js in init.js appends cb message to this
+  // Instead of creating a new thing, I have no words
+  res.render('login', {messages: req.session.flash.error.slice(-1)});
 });
 
 router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.get('/home', passport.authenticationMiddleware(), (req, res) => {
-    res.render('home');
-})
+router.get('/home', (req, res, next) => {
+  let match = new Match(
+    {
+      player1: "627ff1868192c01bfca7d100",
+      lpayer2: "627fe69aa2ca93781f8b897a"
+    }
+  );
+  if (req.isAuthenticated()) {
+    let name = req.user.name;
+    Match.find({$or: [{player1: name}, {player2: name}]},
+        (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    })
+
+  } else {
+    res.render("login");
+  }
+});
 module.exports = router;
