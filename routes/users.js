@@ -85,14 +85,13 @@ router.post("/register", (req, res, next) => {
     );
 
     let errors = [];
-    console.log(User.exists( {email: "hhh" }, (err) => {if(err) {console.log(err);}}));
     if(!name || !email || !password || !password2) {
       errors.push({type: "bg-red-700	", msg: "Please fill in all fields"})
     } 
-    if (User.exists({ email: email }, (err) => {if(err) {console.log(err);}})) {
+    if (User.exists({ email: email }, (err) => {if(err) {console.log("2");}})) {
       errors.push({type: "bg-red-700	", msg: "Email already in use"});
     }
-    if (User.exists({ name: name }, (err) => {if(err) {console.log(err);}})) {
+    if (User.exists({ name: name }, (err) => {if(err) {console.log("1");}})) {
       errors.push({type: "bg-red-700	", msg: "Username already in use"});
     }
     if (password !== password2) {
@@ -131,7 +130,7 @@ router.post("/register", (req, res, next) => {
         // Use only with transporter
         const sendEmail = async (emailOptions) => {
           let emailTransporter = await createTransporter();
-          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log(err)}});
+          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log("4")}});
         };
         
         sendEmail(mail_options);
