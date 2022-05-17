@@ -1,0 +1,11 @@
+<%- include('partials/head.ejs') %>
+<!-- sends user if logged in, sends null of not
+     TODO implement in index.js
+    -->
+<%- include('partials/home_navbar.ejs', {user: user}) %>
+<% if (!user) { %>
+    <div class="tenor-gif-embed" data-postid="20144783" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/hu-tao-genshin-impact-sphere-gif-20144783">Hu Tao Genshin Impact Sticker</a>from <a href="https://tenor.com/search/hu+tao-stickers">Hu Tao Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<% } else { %>
+    <div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/UP6qyw3CLSs67o-zClrCzw/662550543535882240" data-did="d1bcfe4a2ce55e3c27d36c6ab9ee4fade08dad49"><a href="https://ecchi-gone-wild.tumblr.com/post/662550543535882240/hentaiasswoman-mona-genshin-impact-by">https://ecchi-gone-wild.tumblr.com/post/662550543535882240/hentaiasswoman-mona-genshin-impact-by</a></div>  <script async src="https://assets.tumblr.com/post.js"></script>
+<% } %>
+    </body>

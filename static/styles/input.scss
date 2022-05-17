@@ -1,9 +1,0 @@
-@import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-
-.users-label {
-    @extend .block;
-    @extend .text-grey-darker;
-    @extend .text-sm;
-    @extend .font-bold;
-    @extend .mb-2;
-}
