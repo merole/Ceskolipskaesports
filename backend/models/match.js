@@ -14,10 +14,12 @@ const MatchSchema = new mongoose.Schema({
         required: true
     },
     img1: {
-        type: String
+        data: Buffer,
+        contentType: String
     },
     img2: {
-        type: String
+        data: Buffer,
+        contentType: String
     },
     comment1: {
         type: String

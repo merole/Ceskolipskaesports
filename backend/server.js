@@ -55,3 +55,4 @@ app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
 app.use('/user', require('./routes/user'));
+app.use('/cr', require('./routes/cr'));
