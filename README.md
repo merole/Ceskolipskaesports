@@ -1,2 +1,3 @@
 # CR-Tournament-upload-system
-CR tournament upload system for easy match result checking
+Stranka pro Českolipská esports, zahrnuje herní systém pro Clash Royale turnaj
+Používá Node.js: express, passport, crypto; MongoDB + mongoose, tailwindcss + flowbite
