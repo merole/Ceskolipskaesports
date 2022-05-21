@@ -23,7 +23,7 @@ const checkAuth = (req) => {
 router.get("/", (req, res) => {
     // @ts-ignore
     if (checkAuth) {
-        Match.find( {} , (err) => {if (err) {console.log(err);}})
+        Match.find({})
         .then( (result) => {
             res.render("admin", { matches: result});
         });
