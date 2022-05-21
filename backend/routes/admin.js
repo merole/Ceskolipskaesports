@@ -23,7 +23,11 @@ const checkAuth = (req) => {
 router.get("/", (req, res) => {
     // @ts-ignore
     if (checkAuth) {
-        res.render("admin");
+        Match.find( {} , (err) => {if (err) {console.log(err);}})
+        .then( (result) => {
+            res.render("admin", { matches: result});
+        });
+        
     } else {
         res.render("home");
     }

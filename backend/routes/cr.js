@@ -10,6 +10,8 @@ const nodemailer = require('nodemailer');
 const url = require("url");
 const router = require("express")();
 const passport = require('passport');
+const multer = require("multer");
+const fs = require("fs");
 // This is proably required
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
@@ -19,21 +21,29 @@ router.set('views', '../frontend/views/user');
 require('dotenv').config();
 //------
 
+let upload = multer({ dest: "/uploads" });
+
 router.post("/upload", (req, res, next) => {
     if (req.isAuthenticated()) {
-        let {img, comment, user, id} = req.body;
-        Match.findById(id)
-         .then((result) => {
-             if (result.player1 == user) {
-                 result.update({img1: img, comment1: comment}, (err) => {if (err) {console.log(err)}})
-             } else if (result.player2 == user) {
-             } else {
-                 // TODO logging
-                 console.log("error");
-                 return
-             }
-
-         });
+        upload.single("img")(req, res, (err) => {
+            let img = {
+                contentType:req.file.mimetype,
+                data: Buffer.from(fs.readFileSync(req.file.path).toString("base64"),'base64')
+            };
+            let { comment, user, id, win} = req.body;
+            Match.findById(id)
+            .then((result) => {
+                if (result.player1 == user) {
+                    result.update({img1: img, comment1: win ? "WON" + comment : "LOST" + comment}, (err) => {if (err) {console.log(err)}});
+                } else if (result.player2 == user) {
+                    result.update({img2: img, comment2: win ? "WON" + comment : "LOST" + comment}, (err) => {if (err) {console.log(err)}})
+                } else {
+                    // TODO logging
+                    console.log("error");
+                    return
+                }
+            });
+        });   
     } else {
         res.redirect("login");
     }
