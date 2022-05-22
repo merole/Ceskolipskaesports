@@ -22,9 +22,9 @@ require('dotenv').config();
 router.get("/", (req, res, next) => {
     if (req.isAuthenticated()) {
         // @ts-ignore
-        let match = Match.findOne({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
+        let match = Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
          .then((result) => {
-            res.render("profile", {user: req.user, match: result});
+            res.render("profile", {user: req.user, matches: result});
          });
         
     } else {

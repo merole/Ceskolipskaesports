@@ -6,7 +6,9 @@
     <button type="submit">Submit</button>
 </form>
 <div class="flex justify-center">
-    <% matches.forEach(match => { %>
-        <%- include('../partials/adm_match.ejs', {match: match}) %>
-    <% }); %>
+    <div class="flex-col">
+        <% matches.forEach(match => { %>
+            <%- include('../partials/adm_match.ejs', {match: match}) %>
+        <% }); %>
+    </div>
 </div>

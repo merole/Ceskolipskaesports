@@ -22,20 +22,20 @@ const checkAuth = (req) => {
 // TODO log unsuccesful ip
 router.get("/", (req, res) => {
     // @ts-ignore
-    if (checkAuth) {
+    if (checkAuth(req)) {
         Match.find({})
         .then( (result) => {
             res.render("admin", { matches: result});
         });
         
     } else {
-        res.render("home");
+        res.redirect("/login");
     }
-})
+});
 
 // TODO log unsuccesful ip
 router.post("/add-match", (req, res) => {
-    if (checkAuth) {
+    if (checkAuth(req)) {
         let {player1, player2, maxDate} = req.body;
         const match = new Match(
             {
@@ -46,9 +46,20 @@ router.post("/add-match", (req, res) => {
         );
 
         match.save()
-        res.render("admin")
+        res.redirect("/admin");
     } else {
-        res.render("home");
+        res.redirect("/login");
     }
-})
+});
+
+router.post("/result", (req, res) => {
+    if (checkAuth(req)) {
+        let {admin_comment, win_1, win_2, id} = req.body;
+        Match.findByIdAndUpdate(id, {$set: {admin_comment: admin_comment, result: win_1 ? win_1 : win_2}}, (err) => {if (err){console.log(err);}});
+        res.redirect("/admin")
+    } else {
+        res.redirect("/login");
+    }
+});
+
 module.exports = router;
