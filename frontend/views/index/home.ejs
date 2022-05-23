@@ -1,83 +1,48 @@
 <%- include('../partials/head.ejs') %>
-<body>
+<body class="font-montserrat">
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
     <div class="flex flex-col items-center justify-center">
-        <div class="text-center text-[40px] font-extrabold my-5 w-7/12">ČESKOLIPSKÁ ESPORTS</div>
+        <div class="text-center text-[80px] font-[500] my-5 w-7/12">ČESKOLIPSKÁ ESPORTS</div>
         <br>
-        <div class="flex text-center w-7/12">Českolipská Esports je skupina nynějších a bývalých studentů z gymnázia Českolipská, kteří
+        <div class="flex text-center w-7/12 font-light text-[26px]">
+            Českolipská Esports je skupina nynějších a bývalých studentů z gymnázia Českolipská, kteří
             pořádají ve volném čase turnaje v e-sportech pro nejen studenty. Většinu zápasů vysíláme na
             streamovací platformě Twitch. Veškerá komunikace probíhá přes platformu Discord. Máme dokonce
-            vlastní servery, na kterých běží všemožné aplikace včetně těch naší výroby.</div>
+            vlastní servery, na kterých běží všemožné aplikace včetně těch naší výroby.
+            <!-- Něco stručnějšího a chytavějšího -->
+        </div>
     </div>
     <div class="flex relative bg-white items-center justify-center">
-        <div class="grid grid-cols-2 w-9/12 self-center bg-slate-50">
-            <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50  ">
-                <div class="flex flex-row px-2 py-3 mx-3">
-                    <!-- TODO domyslet co napsat do karet, (pocet tymu, ceny, zapasy, link na registrace)-->
-                    <div class="flex flex-col mt-1 mb-2 ml-4">
-                        <div class="text-sm text-gray-600">Valorant turnaj</div>
-                        <div class="flex w-full mt-1">
-                            <div class="mr-1 text-xs text-blue-700 cursor-pointer font-base">
-                                New York
-                            </div>
-                            <div class="text-xs text-gray-600">
-                                • By 7th corner
-                            </div>
-                        </div>
-                    </div>
+        <div class="grid grid-cols-1 w-6/12 self-center bg-slate-50 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 justify-items-center">
+            <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 max-w-[300px] justify-center">
+                <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                    <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/clashRoyale_1.jpg">
+                    <div class="absolute top-10 left-6 text-[40px] text-white">Clash Royale</div>
+                    <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Registrujte se zde</div>
                 </div>
-
-                <div class="flex justify-center px-2 mx-3 my-2 text-sm font-medium text-gray-400">
-                    <img class="w-[300px] h-[300px] rounded-full shadow-2xl object-cover" src="https://picsum.photos/200">
-
-                </div>
-
                 <div class="mb-5 border-t border-gray-50">
                     <div class="flex flex-wrap justify-start mx-5 mt-6 text-xs sm:justify-center ">
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Sales:<div class="ml-1 text-gray-500 text-ms"> 30k</div>
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrace končí: <div class="ml-1 text-gray-500 text-ms"> 69.69.4200</div>
                         </div>
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Recipies: <div class="ml-1 text-gray-500 text-ms"> 60k</div>
-                        </div>
-                        <div class="flex mb-2 mr-4 text-gray-700 ">Customers: <div class="ml-1 text-gray-500 text-ms"> 120k</div>
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> 69 Bussy coins</div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-            <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 ">
-                <div class="flex flex-row px-2 py-3 mx-3">
-
-                    <div class="flex flex-col mt-1 mb-2 ml-4">
-                        <div class="text-sm text-gray-600">Garlic Butter Steak Bites</div>
-                        <div class="flex w-full mt-1">
-                            <div class="mr-1 text-xs text-blue-700 cursor-pointer font-base">
-                                New York
-                            </div>
-                            <div class="text-xs text-gray-600">
-                                • By 7th corner
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 max-w-[300px]">
+                <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                    <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/Valorant_art1.jpg">
+                    <div class="absolute top-10 left-6 text-[40px] text-white">Valorant</div>
+                    <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
                 </div>
-
-                <div class="flex justify-center px-2 mx-3 my-2 text-sm font-medium text-gray-400">
-                    <img class="w-[300px] h-[300px] rounded-full shadow-2xl object-cover" src="/images/Valorant_art1.jpg">
-
-                </div>
-
                 <div class="mb-5 border-t border-gray-50">
                     <div class="flex flex-wrap justify-start mx-5 mt-6 text-xs sm:justify-center ">
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Sales:<div class="ml-1 text-gray-500 text-ms"> 30k</div>
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Počet týmů: <div class="ml-1 text-gray-500 text-ms"> 8</div>
                         </div>
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Recipies: <div class="ml-1 text-gray-500 text-ms"> 60k</div>
-                        </div>
-                        <div class="flex mb-2 mr-4 text-gray-700 ">Customers: <div class="ml-1 text-gray-500 text-ms"> 120k</div>
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Vyhrál: <div class="ml-1 text-gray-500 text-ms"> curanki</div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -18,9 +18,9 @@ router.get('/login', (req, res) => {
   // @ts-ignore
   if (req.session.flash && req.session.flash.error) {
     // @ts-ignore
-    res.render('users/login', {messages: req.session.flash.error.slice(-1)});
+    res.render('../users/login', {messages: req.session.flash.error.slice(-1)});
   } else {
-    res.render('users/login', {messages: null});
+    res.render('../users/login', {messages: null});
   }
 });
 
