@@ -6,6 +6,8 @@ const User = require('../models/user');
 const Match = require('../models/match');
 
 router.set('views', '../frontend/views');
+router.set('views', '../frontend/views/index');
+
 require('dotenv').config();
 //-------
 
@@ -23,7 +25,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('users/register');
+    res.render('../users/register');
 });
 
 router.get('/', (req, res, next) => {

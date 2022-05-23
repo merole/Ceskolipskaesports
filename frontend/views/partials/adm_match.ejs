@@ -1,56 +1,57 @@
-<form action="/admin/result" method="post">
-<input class="hidden" name="id" value="<%= match._id %>">
-<div class="flex-col p-2 border-2 border-slate-900 rounded-md w-11/12 <%= (match.result !== "unfinished") ? "bg-green-400" : "" %>">
-    <div class="flex mb-4">
-        <div class="adm-div-2">
-            <p class="text-[30px] text-center"> <%= match.player1 %> </p> 
-        </div>
-        <div class="adm-div-2">
-            <p class="text-[30px] text-center"> <%= match.player2 %> </p> 
-        </div>
-    </div>
-    <div class="flex mb-4">
-        <div class="adm-div-2">
-            <% if(match.img1.data) { %>
-                <img src="data:image/<%=match.img1.contentType%>;base64, <%=match.img1.data.toString('base64')%>" class="object-center">
-            <% } else { %> 
-                <p class="text-[5vw]"> NO IMAGE FOR P1 </p>
-            <% } %>
-        </div>
-        <div class="adm-div-2">
-            <% if(match.img2.data) { %>
-                <img src="data:image/<%=match.img2.contentType%>;base64, <%=match.img2.data.toString('base64')%>">
-            <% } else { %> 
-                <p class="text-[5vw]"> NO IMAGE FOR P2 </p>
-            <% } %>
-        </div>
-    </div>
-    <div class="flex mb-4">
-        <div class="adm-div-2">
-            <p class="text-sm text-center"> <%= match.comment1 %> </p> 
-        </div>
-        <div class="adm-div-2">
-            <p class="text-sm text-center"> <%= match.comment2 %> </p> 
-        </div>
-    </div>
-    <div class="flex mb-4">
-        <div class="adm-div-1">
-            <input name="admin_comment" type="text" placeholder="<% match.adminComment %>" class="self-center w-7/12">
-        </div>
-    </div>
-    <div class="flex mb-4">
-        <% if (match.result === "unfinished") { %>
+<div class="flex-col justify-center items-center p-2 border-2 border-slate-900 rounded-md w-11/12 <%= (match.result !== "unfinished") ? "bg-green-400" : "" %>">
+    <form action="/admin/result" method="post">
+        <input class="hidden" name="id" value="<%= match._id %>">
+        <div class="flex mb-4">
             <div class="adm-div-2">
-                <button type="submit" name="win_1" type="button" class="adm-btn" value="<%= match.player1 %>">Prohlásit vítěze</button>
+                <p class="text-[30px] text-center"> <%= match.player1 %> </p> 
             </div>
             <div class="adm-div-2">
-                <button type="submit" name="win_2" type="button" class="adm-btn" value="<%= match.player2 %>">Prohlásit vítěze</button>
+                <p class="text-[30px] text-center"> <%= match.player2 %> </p> 
             </div>
-        <% } else { %>
+        </div>
+        <div class="flex mb-4">
+            <div class="adm-div-2">
+                <% if(match.img1.data) { %>
+                    <img src="data:image/<%=match.img1.contentType%>;base64, <%=match.img1.data.toString('base64')%>" class="object-center">
+                <% } else { %> 
+                    <p class="text-[5vw]"> NO IMAGE FOR P1 </p>
+                <% } %>
+            </div>
+            <div class="adm-div-2">
+                <% if(match.img2.data) { %>
+                    <img src="data:image/<%=match.img2.contentType%>;base64, <%=match.img2.data.toString('base64')%>">
+                <% } else { %> 
+                    <p class="text-[5vw]"> NO IMAGE FOR P2 </p>
+                <% } %>
+            </div>
+        </div>
+        <div class="flex mb-4">
+            <div class="adm-div-2">
+                <p class="text-sm text-center"> <%= match.comment1 %> </p> 
+            </div>
+            <div class="adm-div-2">
+                <p class="text-sm text-center"> <%= match.comment2 %> </p> 
+            </div>
+        </div>
+        <div class="flex mb-4">
             <div class="adm-div-1">
-                <p class="text-[5vw]">VYHRÁL <%= match.result %>! </p>
+                <input name="adminComment" type="text" value="<%= match.adminComment %>" class="self-center w-7/12">
+                <button type="submit" name="update_comment" type="button" class="adm-btn" value="true">Upravit komentář</button>
             </div>
-        <% } %>
+        </div>
+        <div class="flex mb-4">
+            <% if (match.result === "unfinished") { %>
+                <div class="adm-div-2">
+                    <button type="submit" name="win_1" type="button" class="adm-btn" value="<%= match.player1 %>">Prohlásit vítěze</button>
+                </div>
+                <div class="adm-div-2">
+                    <button type="submit" name="win_2" type="button" class="adm-btn" value="<%= match.player2 %>">Prohlásit vítěze</button>
+                </div>
+            <% } else { %>
+                <div class="adm-div-1">
+                    <p class="text-[5vw]">VYHRÁL <%= match.result %>! </p>
+                </div>
+            <% } %>
+        </form>
     </div>
 </div>
-</form>

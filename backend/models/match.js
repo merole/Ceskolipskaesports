@@ -28,7 +28,8 @@ const MatchSchema = new mongoose.Schema({
         type: String
     },
     adminComment: {
-        type: String
+        type: String,
+        default: "Komentář admina"
     },
     result: {
         type: String,
