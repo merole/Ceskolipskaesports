@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require('passport');
+// Probably required
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 
