@@ -17,7 +17,3 @@
 .cr-div {
     @apply flex h-12 bg-red-500 items-center justify-center
 }
-
-.text-RED {
-    @apply text-[#d52a2a]
-}

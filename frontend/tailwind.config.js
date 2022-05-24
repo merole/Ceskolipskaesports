@@ -12,4 +12,4 @@ module.exports = {
     require('flowbite/plugin'),
     require('autoprefixer'),
 ],
-};
+}

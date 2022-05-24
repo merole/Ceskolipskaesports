@@ -22,22 +22,24 @@ require('dotenv').config();
 
 // Setup for transporter for sending confim emails
 const OAuth2 = google.auth.OAuth2;
-
-async function createTransporter() {
+const {CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, EMAIL} = 
+  process.env;
+const createTransporter = async () => {
   const oauth2Client = new OAuth2(
-    process.env.OAUTH_CLIENTID,
-    process.env.OAUTH_CLIENT_SECRET,
-    "https://developers.google.com/oauthplayground"
+    CLIENT_ID,
+    CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground'
   );
 
   oauth2Client.setCredentials({
-    refresh_token: process.env.OAUTH_REFRESH_TOKEN
+    refresh_token: process.env.REFRESH_TOKEN
   });
 
   const accessToken = await new Promise((resolve, reject) => {
     oauth2Client.getAccessToken((err, token) => {
       if (err) {
-        reject("Failed to create access token :(");
+        console.log(err);
+        reject();
       }
       resolve(token);
     });
@@ -47,11 +49,11 @@ async function createTransporter() {
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: process.env.EMAIL,
+      user: EMAIL,
       accessToken,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.OAUTH_REFRESH_TOKEN
+      clientId: CLIENT_ID,
+      clientSecret:CLIENT_SECRET,
+      refreshToken:REFRESH_TOKEN
     }
   });
 
@@ -69,14 +71,11 @@ router.post('/login',
 //TODO logging
 router.post("/register", (req, res, next) => {
     
-
-    // req body
+  // TODO unique name
     const {name, email, password, password2} = req.body;
     let salt = crypto.randomBytes(32).toString('hex');
     let hash = crypto.pbkdf2Sync(password, salt, 10000, 64, process.env.PASS_HASH).toString("hex");
-     // Creating a unique salt for a particular user 
-
-
+    // Creating a unique salt for a particular user 
     const user = new User(
         {
             name: name,
@@ -90,16 +89,25 @@ router.post("/register", (req, res, next) => {
     let errors = [];
     // Sends a message, type gets put into the class param, message is the text
     if(!name || !email || !password || !password2) {
-      errors.push({type: "bg-red-100 rounded-lg py-5 px-6 mb-[0.3rem] text-base text-red-700 inline-flex items-center w-7/12", msg: "Vyplňte všechna pole"})
-    } 
-    if (User.exists({ email: email }, (err) => {if(err) {console.log("2");}})) {
-      errors.push({type: "bg-red-100 rounded-lg py-5 px-6 mb-[0.3rem] text-base text-red-700 inline-flex items-center w-7/12", msg: "E-mailová adresa se již používá"});
+      errors.push("Vyplňte všechna pole")
     }
+    User.find({ name: name })
+    .then((result) => {
+      if (result) {
+        errors.push("E-mailová adresa se již používá");
+      }
+    });
+    User.find({ email: email })
+    .then((result) => {
+      if (result) {
+        errors.push("E-mailová adresa se již používá");
+      }
+    });
     if (password !== password2) {
-      errors.push({type: "bg-red-100 rounded-lg py-5 px-6 mb-[0.3rem] text-base text-red-700 inline-flex items-center w-7/12", msg: "Hesla se neshodují"});
+      errors.push("Hesla se neshodují");
     }
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      errors.push({type: "bg-red-100 rounded-lg py-5 px-6 mb-[0.3rem] text-base text-red-700 inline-flex items-center w-7/12", msg: "Neplatná e-mailová adresa"});
+      errors.push("Neplatná e-mailová adresa");
     }
 
     if (errors.length > 0) {
@@ -181,12 +189,10 @@ router.post("/send_again", (req, res) => {
       let emailTransporter = await createTransporter();
       await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log("4")}});
     };
-    // TODO check if activev
+    // TODO check if active
     sendEmail(mail_options);
     res.render("login", {messages: null });
    });
-
-
 });
 
 module.exports = router;

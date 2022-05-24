@@ -44,16 +44,23 @@ router.get("/settings", (req, res, next) => {
 router.post("/settings", (req, res, next) => {
     if (req.isAuthenticated()) {
         let {name_val, email_val, password_val} = req.body;
-        // @ts-ignore
-        [{name: name_val}, {email: email_val}, {password: password_val ? crypto.pbkdf2Sync(password_val, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}].forEach((e) => {
-            if (e[Object.keys(e)[0]]) {
-                console.log(e)
+        User.find({name: name_val})
+        .then((result) => {
+            if (!result) {
                 // @ts-ignore
-                User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {console.log(err);}});
+                [{name: name_val}, {email: email_val}, {password: password_val ? crypto.pbkdf2Sync(password_val, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}].forEach((e) => {
+                    if (e[Object.keys(e)[0]]) {
+                        console.log(e)
+                        // @ts-ignore
+                        User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {console.log(err);}});
+                    }
+                });
+                req.logout();
+                res.redirect("/user");
+            } else {
+                res.render("settings", {user: req.user, messages: ["Jméno již existuje"]})
             }
         });
-        req.logout();
-        res.redirect("/user");
     } else {
         res.redirect("/login");
     }

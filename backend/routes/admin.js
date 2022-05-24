@@ -5,6 +5,7 @@ const router = require("express")();
 const passport = require('passport');
 const User = require('../models/user');
 const Match = require('../models/match');
+const Player = require('../models/player');
 
 router.set("views", "../frontend/views/admin");
 
@@ -75,4 +76,31 @@ router.post("/result", (req, res) => {
     }
 });
 
+router.get("/accept-cr", (req, res) => {
+    if (checkAuth(req)) {
+        Player.find({comment: "unchecked"})
+        .then((result) => {
+            res.render("accept_cr", {players: result, admin: req.user});
+         });
+    } else {
+        res.redirect("/login");
+    }
+});
+
+router.post("/accept-cr", (req, res) => {
+    if (checkAuth(req)) {
+        let {name, comment, update_comment, accept, deny} = req.body;
+        console.log(req.body)
+        if (update_comment) {
+            Player.findOneAndUpdate({name: name}, {$set: {comment: comment}}, (err) => {if(err){console.log(err);}});
+        } else if (accept) {
+            Player.findOneAndUpdate({name: name}, {$set: {active: true, comment: comment}}, (err) => {if(err){console.log(err);}});
+        } else if (deny) {
+            Player.findOneAndDelete({name: name}, (err) => {if(err){console.log(err);}});
+        }
+        res.redirect("/admin/accept-cr");
+    } else {
+        res.redirect("/login");
+    }
+});
 module.exports = router;

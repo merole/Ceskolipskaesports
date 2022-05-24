@@ -22,7 +22,7 @@
                       </div>
                       <div class="py-2 px-4 place-content-center">
                         <% if (messages) { %>
-                            <p class="block text-gray-700 bg-red-400 text-sm font-bold mb-2 rounded-full pl-2 pr-2 self-center"> <%= messages %> </p>
+                            <div class="block text-gray-700 bg-red-400 text-sm font-bold mb-2 rounded-full pl-2 pr-2 self-center"> <%= messages %> </div>
                             <% if (messages.includes("Pros")) { %>
                                 <a class="text-gray-700 bg-blue-400 text-sm mb-3 hover:text-purple-600 rounded-full pl-2 pr-2 text-center self-center" href="/users/send_again" name="send_again">Poslat e-mail znovu</a>
                             <% } %>

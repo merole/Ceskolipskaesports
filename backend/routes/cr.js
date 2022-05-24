@@ -3,6 +3,7 @@
 // TODO tidy up
 const User = require('../models/user');
 const Match = require('../models/match');
+const Player = require('../models/player');
 const flash = require('connect-flash');
 const crypto = require('crypto');
 const { google } = require("googleapis");
@@ -16,7 +17,7 @@ const fs = require("fs");
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
 
-router.set('views', '../frontend/views/user');
+router.set('views', '../frontend/views/cr');
 
 require('dotenv').config();
 //------
@@ -58,18 +59,50 @@ router.post("/upload", (req, res) => {
     }
 });
 
+// TODO msg potreba ucet pro registraci
 router.get("/register", (req, res) => {
     if (req.isAuthenticated()) {
-        res.render("register", {user: req.user});
+        // @ts-ignore
+        Player.exists({name: req.user.name})
+        .then((result) => {
+            if (result) {
+                res.redirect("/user");
+            }
+            else {
+                res.render("register", {user: req.user});
+            }
+        });
     } else {
         res.redirect("/login");
     }
 });
 
 router.post("/register", (req, res) => {
-    let {link, times, user} = req.body;
-    // TODO DB model
-    Player.
+    let {link, checkbox, times} = req.body;
+    let errors = [];
+    if (!/^https:\/\/link.clashroyale.com\/invite\/friend\/[a-z][a-z]\?tag=[\s\S]*&token=[\s\S]*&platform=[\s\S]*$/.test(link)) {
+        errors.push("Neplatný link");
+    }
+    if (!checkbox) {
+        errors.push("Seznamte se s pravidly!");
+    }
+
+    if (errors.length > 0) {
+        res.render("register", {user: req.user, messages: errors});
+    } else {
+        // TODO Times
+        const player = new Player(
+            {
+                // @ts-ignore
+                name: req.user.name,
+                link: link,
+                // @ts-ignore
+                email: req.user.email
+            }
+        );
+        player.save()
+        .then(res.redirect("/cr/confirm"));
+    }
 });
 
 module.exports = router;

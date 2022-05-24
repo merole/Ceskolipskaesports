@@ -1,0 +1,35 @@
+<%- include('../partials/head.ejs') %>
+    <div class="flex flex-col w-full justify-center">
+        <% locals.players.forEach(player => { %>
+            <form method="post" action="/admin/accept-cr">
+                <input name="name" value="<%= player.name %>" class="hidden">
+                <div class="flex flex-col bg-slate-400 w-8/12 border-2 border-red-500">
+                    <div class="adm-div-1">
+                        <%= player.link %>
+                    </div>
+                    <div class="flex">
+                        <div class="adm-div-2">
+                            <%= player.name %>
+                        </div>
+                        <div class="adm-div-2">
+                            <%= player.email %>
+                        </div>   
+                    </div>
+                    <div class="flex">
+                        <div class="adm-div-2">
+                            <input type="text" placeholder="<%= player.comment %>" name="comment" value="Validated">
+                        </div>
+                        <div class="adm-div-2">
+                            <button type="submit" class="adm-btn" value="true" name="update_comment">Komentar</button>
+                        </div>
+                    </div>
+                    <div class="adm-div-1">
+                        <button type="submit" class="adm-btn" value="true" name="accept">Přijmout</button>
+                    </div>
+                    <div class="adm-div-1">
+                        <button type="submit" class="adm-btn" value="true" name="deny">Nepřijmout</button>
+                    </div>
+                </div>
+            </form>
+        <% }); %>
+    </div>

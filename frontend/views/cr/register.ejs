@@ -1,0 +1,28 @@
+<%- include('../partials/head.ejs') %>
+<!-- TODO prvni redirect na stranku s pravidly -->
+<body>
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="flex bg-slate-100 items-center justify-center my-5 w=full">
+        <div class="items-center -mx-3 mb-6 bg-slate-100 w-6/12 p-4 rounded shadow">
+            <form class="flex flex-col place-content-center items-center" method="post">
+                <label class="block self-start uppercase tracking-wide text-gray-700 text-[20px] font-bold mb-2">
+                    Clash Royale invite link
+                </label>
+                <input name="link" class="w-full appearance-none block bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="https://link.clashroyale.com/invite/friend/**?tag=*8&token=*&platform=*"  pattern="^https:\/\/link.clashroyale.com\/invite\/friend\/[a-z][a-z]\?tag=[\s\S]*&token=[\s\S]*&platform=[\s\S]*$">
+                <div class="form-group form-check text-center mb-6">
+                    <input type="checkbox"
+                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer" required
+                        name="checkbox" value="true">
+                    <label class="form-check-label inline-block">Souhlasím s <a href="/cr/rules" class="text-cyan-900 hover:text-purple-600 font-semibold">pravidly</a>
+                    </label>
+                </div>
+                <button type="submit" class="mb-2 mx-16 rounded-full py-1 px-24 text-center font-bold bg-gradient-to-r text-white from-red-600 to-gray-800  hover:from-gray-800 hover:to-red-600">Odeslat přihlášku</button> <br>
+                <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Přihláška musí být schválena, po potvrzení Vám přijde e-mail</div>
+                <% if (locals.messages) {locals.messages.forEach((message) => { %>
+                    <%- include('../partials/messages.ejs', {message: message}) %>
+                <% });} %>
+            </form>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>
