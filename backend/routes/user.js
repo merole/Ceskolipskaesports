@@ -4,11 +4,7 @@
 // TODO this should really be called "account.js"...
 const User = require('../models/user');
 const Match = require('../models/match');
-const flash = require('connect-flash');
 const crypto = require('crypto');
-const { google } = require("googleapis");
-const nodemailer = require('nodemailer');
-const url = require("url");
 const router = require("express")();
 const passport = require('passport');
 // This is proably required

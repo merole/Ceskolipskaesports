@@ -1,9 +1,6 @@
 // @ts-check
 // Packages
-const express = require('express');
 const router = require("express")();
-const passport = require('passport');
-const User = require('../models/user');
 const Match = require('../models/match');
 const Player = require('../models/player');
 

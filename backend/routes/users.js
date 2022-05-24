@@ -1,7 +1,6 @@
 // @ts-check
 // Packages
 const User = require('../models/user');
-const flash = require('connect-flash');
 const crypto = require('crypto');
 const { google } = require("googleapis");
 const nodemailer = require('nodemailer');
