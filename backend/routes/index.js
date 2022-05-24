@@ -13,8 +13,9 @@ require('dotenv').config();
 
 router.get('/login', (req, res) => {
   // For some reason passport.js in init.js appends cb message to this
-  // Instead of creating a new thing, I have no words
+  // Instead of creating a new thing
   // Also there is zero documentation for this so ¯\_(ツ)_/¯
+  // "Nehas, co nepálí"
   // @ts-ignore
   if (req.session.flash && req.session.flash.error) {
     // @ts-ignore

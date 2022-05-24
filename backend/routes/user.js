@@ -1,6 +1,7 @@
 // @ts-check
 // Packages
 // TODO tidy up
+// TODO this should really be called "account.js"...
 const User = require('../models/user');
 const Match = require('../models/match');
 const flash = require('connect-flash');

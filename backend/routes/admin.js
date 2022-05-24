@@ -12,7 +12,7 @@ require('dotenv').config();
 //-------
 // TODO logging for EVERYTHING
 const checkAuth = (req) => {
-    if (req.user.role === "admin") {
+    if (req.isAuthenticated() && req.user.role === "admin") {
         return true;
     } else { 
         return false;
@@ -51,6 +51,15 @@ router.post("/add-match", (req, res) => {
         res.redirect("/login");
     }
 });
+
+router.post("/add-matches", (req, res) => {
+    if (checkAuth(req)) {
+        // TODO ukoncit registraci, vygenerovat skupiny, vygenerovat zapasy, 
+        let {match_str} = req.body;
+    } else {
+        res.redirect("/login");
+    }
+})
 
 router.post("/result", (req, res) => {
     if (checkAuth(req)) {

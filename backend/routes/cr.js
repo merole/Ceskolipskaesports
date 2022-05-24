@@ -21,7 +21,7 @@ router.set('views', '../frontend/views/user');
 require('dotenv').config();
 //------
 
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads/' });
 router.post("/upload", (req, res) => {
     if (req.isAuthenticated()) {
         upload.single("img")(req, res, (err) => {
@@ -56,6 +56,20 @@ router.post("/upload", (req, res) => {
     } else {
         res.redirect("login");
     }
+});
+
+router.get("/register", (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render("register", {user: req.user});
+    } else {
+        res.redirect("/login");
+    }
+});
+
+router.post("/register", (req, res) => {
+    let {link, times, user} = req.body;
+    // TODO DB model
+    Player.
 });
 
 module.exports = router;
