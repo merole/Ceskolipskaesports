@@ -1,0 +1,74 @@
+<%- include('../partials/head.ejs') %>
+<!-- TODO prvni redirect na stranku s pravidly -->
+<body>
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="flex flex-col w-full justify-center items-center">
+        <div class="text-6xl md:text-9xl font-openSans mt-12">CLASH ORÁL</div>
+        <div class="flex w-11/12 md:w-8/12 justify-center items-center my-20">
+            <div class="flex flex-col w-10/12 space-y-4 justify-center">
+                <div class="flex flex-col space-y-1">
+                    <p class="t1">Info pro zájemce</p>
+                        <p class="t2">1. Discord</p>
+                            <p class="t3">
+                        &#8226 Pro účast v tomto turnaji je potřeba se připojit na discord server a sledovat dění (qr kod + invite)
+                            </p>
+                        <p class="t2">2. Webstránka</p> 
+                            <p class="t3">
+                                &#8226 V průběhu turnaje bude zapisování výsledků probíhat na naší webstránce <span class="italic">ceskolipskaesports.com</span>
+                            </p>
+                    <p class="t1">Pravidla turnaje</p>
+                        <p class="ml-0 mb-10 italic text-[18px] leading-5 font-normal">
+                            Admini (vedoucí) soutěže mají právo na změnu/úpravu kteréhokoli pravidla jakož i rozhodnutí o udělení výjimky v konkrétním přesně definovaném případě. Veškeré zde nespecifikované případy řeší admini individuálně. 
+                        </p>
+                        <p class="t2">1. Forma Turnaje</p>
+                            <p class="t3">a. Fáze skupiny</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém na 2 vítězné duely <span class="italic"> 1v1 Classic </span>, výherce musí doložit screenshoty všech všech duelů z battle logu</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>Skupina se odehraje systémem všichni proti všem, postup do Play Off se poté odvíjí od počtu vyhraných zápasů, popř. vzájemného zápasu</p>
+                                <p class="t4"><span class="font-semibold">iii. </span>War Decky - Hráč musí mít <span class="font-extrabold">předem připravené</span> 3 decky ve kterých se žádná karta neobjeví vícekrát, šampioni jsou v této fázi <span class="font-extrabold">zakázáni</span> </p>
+                            <p class="t3">b. Play Off</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém na 2 vítězné duely <span class="italic"> 1v1 Classic </span>, výherce musí doložit screenshoty všech všech duelů z battle logu</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>Play Off se odehraje systémem pavouka, poražený tedy vypadává a vítěz postupuje do <span class="font-extrabold">Čtvrtfinále</span> </p>
+                                <p class="t4"><span class="font-semibold">iii. </span>War Decky  - Hráč musí mít <span class="font-extrabold">předem připravené</span> 3 decky ve kterých se žádná karta neobjeví vícekrát, šampioni jsou v této fázi <span class="font-extrabold">zakázáni</span> </p>
+                            <p class="t3">c. Čtvrtfinále</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém na 3 vítězné duely <span class="italic"> 1v1 Classic </span>, výherce musí doložit screenshoty všech duelů z battle logu, první 3 duely se odehrají s War Decky, případné druhé dva duely se odehrají s resetovanými war decky tzn. nové dva decky, které splňují podmínku neopakující se karty</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>Čtvrtfinále se odehraje systémem pavouka, poražený tedy vypadává a vítěz postupuje do <span class="font-extrabold">Semifinále</span</p>
+                                <p class="t4"><span class="font-semibold">iii. </span>War Decky - Hráč musí mít <span class="font-extrabold">předem připravené</span> 3 + 2 decky ve kterých se žádná karta neobjeví vícekrát, případné další dva duely se odehrají s dalšími 2 War decky, šampioni jsou v této fázi <span class="font-extrabold">povoleni</span> </p>
+                            <p class="t3">d. Semifinále</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém na 3 vítězné duely 1v1 Classic, první 3 duely se odehrají s War Decky, případné druhé dva duely se odehrají s novým setem War Decků</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>Semifinále se odehraje <span class="font-extrabold">PREZENČNĚ</span>, v Praze na Proseku, datum a místo bude upřesněno</p>
+                                <p class="t4"><span class="font-semibold">iii. </span>Semifinále se odehraje systémem pavouka, poražený tedy vypadává a vítěz postupuje do <span class="font-extrabold">Finále</span</p>
+                                <p class="t4"><span class="font-semibold">iv. </span>War Decky - Hráč musí mít <span class="font-extrabold">předem připravených</span> 3 + 2 decky ve kterých se žádná karta neobjeví vícekrát, šampioni jsou v této fázi <span class="font-extrabold">povoleni</span> </p>
+                            <p class="t3">e. Finále</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém na 4 vítězné duely 1v1 Classic, první 3 duely se odehrají s War Decky, případné další 3 duely se odehrají s novým setem War Decků, poslední deck je libovolný
+                                <p class="t4"><span class="font-semibold">ii. </span>Finále se odehraje <span class="font-extrabold">PREZENČNĚ</span>, v Praze na Proseku, datum a místo bude upřesněno</p>
+                                <p class="t4"><span class="font-semibold">iv. </span>War Decky - Hráč musí mít <span class="font-extrabold">předem připravených</span> 3 + 3 + 1 deck ve kterých se žádná karta neobjeví vícekrát, šampioni jsou v této fázi <span class="font-extrabold">povoleni</span> </p>
+
+                                    
+                        <p class="t2">2. Forma zápasu</p>
+                            <p class="t3">Zápas</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Systém zápasu je uveden pro každou fázi v dané kategorii</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>War Decky - Jeden set war decků jsou 3 decky, v kterých se žádná karta neopakuje. </p>
+                                <p class="t4"><span class="font-semibold">iii. </span>V případě porušení pravidel o War Decích je na poškozeném hráči aby buďto dohodl rematch popř. dohrál zápas (v této situaci je třeba přidat komentář, jinak bude zápas zkontumován ve prospěch poškozeného hráče), nebo se rozhodl, že chce kontumaci (v této situaci je třeba přidat komentář a doložit screenshot z battle logu)
+                                    <br> Provinivší hráč obdrží napomenutí v obou případech
+                                    </p>
+                            <p class="t3">Odevzdání zápasu</p>
+                                <p class="t4"><span class="font-semibold">i. </span>Celý proces probíhá po přihlášení na <a href="www.ceskolipskaesports.com/user" class="link">www.ceskolipskaesports.com/user</a></p>
+                                <p class="t4"><span class="font-semibold">ii. </span>U každého zápasu je uveden konečný datum odevzdání, tento datum <span class="extrabold">NENÍ</span> možné za žádných okolností posunout</p>
+                                <p class="t4"><span class="font-semibold">iii. </span>Hráč, který se prohlašuje za vítěze je povinen doložit screenshot, popř. komentář. Situace, v kterých je potřeba doložit komentář jsou uvedeny v těchto pravidlech</p>
+                                <p class="t4"><span class="font-semibold">iv. </span>Hráč se nemůže prohlásit vítězem bez důkazu, hráč který toto pravidlo poruší dostane napomenutí, výsledek zápasu je neovlivněn</p>
+                                <p class="t4"><span class="font-semibold">v. </span>Výsledek zápasu je ručně rozhodnut adminem</p>
+                
+                        <p class="t2">3. Komunikace</p>
+                            <p class="t3"><a href=https://discord.com/invite/3NDZfuk5jp class="link">Discord</a></p>
+                                <p class="t4"><span class="font-semibold">i. </span>Veškerá komunikace s adminy probíhá přes platformu Discord</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>seznam adminů</p>
+                                <p class="t4"><span class="font-semibold">iii. </span>Hráč má povinnost číst a odpovídat na pingy od všech Moderátorů (role)</p>
+                                <p class="t4"><span class="font-semibold">iv. </span>Nedodržení tohoto pravidla může vést k vyloučení</p>
+                                <p class="t4"><span class="font-semibold">v. </span>Hráč je povinen odpovídat na komunikaci ostatních hráčů přes Discord, je možné komunikovat jiným způsobem</p>
+                                <p class="t4"><span class="font-semibold">vi. </span>Jakékoliv nemístné, obscénní, vulgární nebo urážlivé chování může vést k napomenutí nebo vyloučení</p> 
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>
