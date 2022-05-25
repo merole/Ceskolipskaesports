@@ -5,6 +5,7 @@ module.exports = {
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],
         'bebasNeue': ['Bebas Neue', 'cursive'],
+        'openSans': ['Open Sans',' sans-serif'],
       }
     },
   },

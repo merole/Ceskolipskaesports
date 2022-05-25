@@ -53,7 +53,10 @@ router.post("/upload", (req, res) => {
     }
 });
 
-// TODO msg potreba ucet pro registraci
+router.get("/rules", (req, res) => {
+    res.render("rules", {user: req.user});
+});
+
 router.get("/register", (req, res) => {
     if (req.isAuthenticated()) {
         // @ts-ignore

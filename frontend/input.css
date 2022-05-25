@@ -17,3 +17,23 @@
 .cr-div {
     @apply flex h-12 bg-red-500 items-center justify-center
 }
+
+.t1 {
+    @apply font-extrabold text-4xl md:text-7xl pb-5
+}
+
+.t2 {
+    @apply ml-5 font-normal text-[24px]
+}
+
+.t3 {
+    @apply ml-10 font-normal text-[20px]
+}
+
+.t4 {
+    @apply ml-14 font-normal text-base
+}
+
+.link {
+    @apply text-blue-700 font-semibold
+}

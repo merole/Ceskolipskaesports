@@ -1,52 +1,77 @@
 <%- include('../partials/head.ejs') %>
-<body class="font-montserrat">
+<body>
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
+
     <div class="flex flex-col items-center justify-center">
-        <div class="text-center text-[80px] font-[500] my-5 w-7/12">ČESKOLIPSKÁ ESPORTS</div>
-        <br>
-        <div class="flex text-center w-7/12 font-light text-[26px]">
-            Českolipská Esports je skupina nynějších a bývalých studentů z gymnázia Českolipská, kteří
-            pořádají ve volném čase turnaje v e-sportech pro nejen studenty. Většinu zápasů vysíláme na
-            streamovací platformě Twitch. Veškerá komunikace probíhá přes platformu Discord. Máme dokonce
-            vlastní servery, na kterých běží všemožné aplikace včetně těch naší výroby.
-            <!-- Něco stručnějšího a chytavějšího -->
-        </div>
+        <p class="font-openSans text-5xl sm:text-5xl xl:text-8xl font-[700] my-5 w-full sm:w-7/12 text-center">ČESKOLIPSKÁ ESPORTS</p>
+        <p class="w-full sm:w-7/12 font-normal text-lg sm:text-2xl text-center font-exo">Pořádámé a vysíláme turnaje (ne)jen v e-sportech</p>
+        <img src="/images/logo.png" class="flex aspect-square w-[300px] -mt-10 -mb-14 sm:hidden">
     </div>
-    <a href="/cr/register">
-        <div class="flex relative bg-white items-center justify-center">
-            <div class="grid grid-cols-1 w-6/12 self-center bg-slate-50 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 justify-items-center">
-                <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 max-w-[300px] justify-center">
+    
+    <div class="flex relative bg-white items-center justify-center font-montserrat">
+        <div class="grid grid-cols-1 w-full sm:w-6/12 self-center bg-slate-50 xl:grid-cols-2 justify-items-center">
+            <div class="col-span-1 sm:w-9/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 justify-center">
+                <a href="/cr/rules">
                     <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
                         <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/clashRoyale_1.jpg">
                         <div class="absolute top-10 left-6 text-[40px] text-white">Clash Royale</div>
                         <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Registrujte se zde</div>
                     </div>
-                    <div class="mb-5 border-t border-gray-50">
-                        <div class="flex flex-wrap justify-start mx-5 mt-6 text-xs sm:justify-center ">
+                    <div class="mb-16 border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                        <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
                             <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrace končí: <div class="ml-1 text-gray-500 text-ms"> 69.69.4200</div>
                             </div>
                             <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> 69 Bussy coins</div>
                             </div>
                         </div>
                     </div>
+                </a>
+            </div>
+            <div class="col-span-1 sm:w-9/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 ">
+                <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                    <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/Valorant_art1.jpg">
+                    <div class="absolute top-10 left-6 text-[40px] text-white">Valorant</div>
+                    <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
                 </div>
-                <div class="col-span-1 mt-5 bg-opacity-50 border border-gray-100 rounded shadow-lg cursor-pointer bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 max-w-[300px]">
-                    <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
-                        <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/Valorant_art1.jpg">
-                        <div class="absolute top-10 left-6 text-[40px] text-white">Valorant</div>
-                        <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
-                    </div>
-                    <div class="mb-5 border-t border-gray-50">
-                        <div class="flex flex-wrap justify-start mx-5 mt-6 text-xs sm:justify-center ">
-                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Počet týmů: <div class="ml-1 text-gray-500 text-ms"> 8</div>
-                            </div>
-                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Vyhrál: <div class="ml-1 text-gray-500 text-ms"> curanki</div>
-                            </div>
+                <div class="mb-16 border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                    <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Počet týmů: <div class="ml-1 text-gray-500 text-ms"> 8</div>
+                        </div>
+                        <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Vyhrál: <div class="ml-1 text-gray-500 text-ms"> curanki</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </a>
+    </div>
+
+    <div class="flex relative bg-white items-center justify-center font-montserrat">
+        <div class="grid grid-cols-2 w-full sm:w-9/12 self-center bg-slate-50 xl:grid-cols-4 justify-items-center">
+            <div class="col-span-1 content-center">
+                <a href="ceskolipska_esports">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/images/instagram.svg">
+                    <p class="text-center">Sledujte Výsledky!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://discord.com/invite/3NDZfuk5jp">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/images/discord.svg">
+                    <p class="text-center">Připojte se!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://www.twitch.tv/ceskolipskaesports">
+                    <img class="overflow-hidden w-[150px] sm:tra hover:scale-[1.05] transform transition duration-500" src="/images/twitch.svg">
+                    <p class="text-center">Sledujte live!</p>
+                </a>
+            </div>
+            <div class="col-span-1 content-center">
+                <a href="https://www.youtube.com/channel/UCGlbsEZRBzkPfsZrkbsCAGA">
+                    <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/images/youtube.svg">
+                    <p class="text-center">Zkoukněte záznamy!</p>
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 <%- include('../partials/footer.ejs') %>
