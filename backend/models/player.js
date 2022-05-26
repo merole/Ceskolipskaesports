@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// TODO discord tag
 const PlayerSchema = new mongoose.Schema({
     name: {
         type: String,

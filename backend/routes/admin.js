@@ -4,6 +4,7 @@ const router = require("express")();
 const Match = require('../models/match');
 const Player = require('../models/player');
 // @ts-ignore
+// @ts-ignore
 const User = require('../models/user');
 const createTransporter = require('../modules/transporter');
 const logger = require('../modules/logger.js');
@@ -14,7 +15,6 @@ require('dotenv').config();
 //-------
 let today = new Date();
 let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-// TODO logging for EVERYTHING
 
 const checkAuth = (req) => {
     if (req.isAuthenticated() && req.user.role === "admin") {
@@ -24,8 +24,6 @@ const checkAuth = (req) => {
     }
 }
 
-// TODO log unsuccesful ip
-// @ts-ignore
 router.get("/", (req, res, next) => {
     // @ts-ignore
     if (checkAuth(req)) {
@@ -45,13 +43,12 @@ router.get("/", (req, res, next) => {
         });
         
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
 
-// TODO log unsuccesful ip
-// @ts-ignore
 router.post("/add-match", (req, res, next) => {
     if (checkAuth(req)) {
         let {player1, player2, maxDate} = req.body;
@@ -67,7 +64,8 @@ router.post("/add-match", (req, res, next) => {
                         discord2: result2.discord,
                         maxDate: maxDate
                     });
-                logger.log("${req.user}$ ADDED match ${player1} vs ${player2} TIME: ${date}")
+                // @ts-ignore
+                logger.log(`${req.user}$ ADDED match ${player1} vs ${player2} TIME: ${date}`)
                 match.save();
                 res.redirect("/admin");
             });
@@ -75,23 +73,28 @@ router.post("/add-match", (req, res, next) => {
 
 
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
 
 // @ts-ignore
+// @ts-ignore
 router.post("/add-matches", (req, res, next) => {
     if (checkAuth(req)) {
         // TODO ukoncit registraci, vygenerovat skupiny, vygenerovat zapasy, 
         // @ts-ignore
+        // @ts-ignore
         let {match_str} = req.body;
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 })
 
+// @ts-ignore
 // @ts-ignore
 router.post("/result", (req, res, next) => {
     if (checkAuth(req)) {
@@ -104,11 +107,13 @@ router.post("/result", (req, res, next) => {
         }
         res.redirect("/admin")
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
 
+// @ts-ignore
 // @ts-ignore
 router.get("/accept-cr", (req, res, next) => {
     if (checkAuth(req)) {
@@ -118,16 +123,17 @@ router.get("/accept-cr", (req, res, next) => {
             res.render("accept_cr", {players: result, admin: req.user});
          });
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
 
 // @ts-ignore
+// @ts-ignore
 router.post("/accept-cr", async (req, res, next) => {
     if (checkAuth(req)) {
         let {name, comment, update_comment, accept, deny} = req.body;
-        console.log(req.body)
         if (update_comment) {
             Player.findOneAndUpdate({name: name}, {$set: {comment: comment}}, (err) => {if(err){logger.error(err);}});
         } else if (accept) {
@@ -142,8 +148,9 @@ router.post("/accept-cr", async (req, res, next) => {
                     text: "Byl jsi přijat do Českolipská Esports turnaje v Clash Royale. Sleduj e-mail, discord a stránku svého účtu pro info"
                 }
                 let emailTransporter = await createTransporter();
-                await emailTransporter.sendMail(mail_options, (err) => {if(err) {console.log("4")}});
-                logger.log("${req.user} ACCEPTED ${name}")
+                await emailTransporter.sendMail(mail_options, (err) => {if(err) {logger.error(err);}});
+                // @ts-ignore
+                logger.log(`${req.user} ACCEPTED ${name}`)
             });
 
         } else if (deny) {
@@ -151,7 +158,8 @@ router.post("/accept-cr", async (req, res, next) => {
         }
         res.redirect("/admin/accept-cr");
     } else {
-        logger.log("${req.user} FAILED TO ACCES the admin page TIME: ${date}");
+        // @ts-ignore
+        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });

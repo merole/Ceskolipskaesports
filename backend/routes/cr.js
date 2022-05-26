@@ -21,11 +21,10 @@ router.post("/upload", (req, res, next) => {
     if (req.isAuthenticated()) {
         upload.single("img")(req, res, (err) => {
             if (err instanceof multer.MulterError) {
-                console.log("Multer err:" + err)
+                logger.error("Multer err:" + err)
             } else if (err) {
                 logger.error(err);
             } else {
-                console.log(Object.keys(req))
                 let img = {
                     contentType: req.file.mimetype,
                     data: Buffer.from(fs.readFileSync(req.file.path).toString("base64"),'base64')
@@ -41,8 +40,6 @@ router.post("/upload", (req, res, next) => {
                         result.update({img2: img, comment2: win ? "WON" + comment : "LOST" + comment}, (err) => {if (err) {logger.error(err)}});
                         res.redirect("/user");
                     } else {
-                        // TODO logging
-                        console.log("error");
                         return
                     }
                 });

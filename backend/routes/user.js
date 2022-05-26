@@ -1,6 +1,5 @@
 // @ts-check
 // Packages
-// TODO tidy up
 // TODO this should really be called "account.js"...
 const User = require('../models/user');
 const Match = require('../models/match');
@@ -48,7 +47,6 @@ router.post("/settings", (req, res, next) => {
                 // @ts-ignore
                 [{name: new_name}, {email: new_email}, {password: new_password ? crypto.pbkdf2Sync(new_password, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}, {discord: new_discord}].forEach((e) => {
                     if (e[Object.keys(e)[0]]) {
-                        console.log(e)
                         // @ts-ignore
                         User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {logger.error(err);}});
                     }

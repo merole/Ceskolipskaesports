@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     }, 
-    // TODO in user.js
     discord: {
         type: String,
         required: false

@@ -150,7 +150,7 @@ router.post("/send_again", (req, res, next) => {
         sendEmail(mail_options);
         res.render("login", {messages: null });
       } else {
-        logger.log("Someone tried to resend mail with an active acc")
+        logger.log("Someone tried to resend mail with an active account")
         res.send("no");
       }
     });
