@@ -1,17 +1,22 @@
-<%- include('../partials/head.ejs') %>
-<!-- TODO cas dohrani -->
-<div class="flex flex-col justify-center items-center">
-    <form action="/admin/add-match" method="post">
-        <input name="player1"  class="place-content-center items-center" placeholder="player1">
-        <input name="player2"  class="place-content-center items-center" placeholder="player2">
-        <input type="datetime-local" name="maxDate" class="place-content-center items-center" placeholder="Max date"> 
-        <button type="submit">Submit</button>
-    </form>
-    <div class="flex justify-center">
-        <div class="flex flex-col justify-center items-center bg-gradient-to-bl from-slate-300 to-gray-400">
-            <% matches.forEach(match => { %>
-                <%- include('../partials/adm_match.ejs', {match: match}) %>
-            <% }); %>
+<%- include('../partials/head.ejs') %>  
+<meta name="robots" content="noindex" />
+</head>
+<body>
+    <%- include('../partials/adm_navbar.ejs') %>
+    <div class="flex flex-col justify-center items-center">
+        <form action="/admin/add-match" method="post">
+            <input name="player1"  class="place-content-center items-center" placeholder="player1">
+            <input name="player2"  class="place-content-center items-center" placeholder="player2">
+            <input type="datetime-local" name="maxDate" class="place-content-center items-center" placeholder="Max date"> 
+            <button type="submit">Submit</button>
+            <input type="hidden" name="admin" value="<%= admin.name %>"> 
+        </form>
+        <div class="flex justify-center">
+            <div class="flex flex-col justify-center items-center bg-gradient-to-bl from-slate-300 to-gray-400">
+                <% matches.forEach(match => { %>
+                    <%- include('../partials/adm_match.ejs', {match: match}) %>
+                <% }); %>
+            </div>
         </div>
     </div>
-</div>
+</body>

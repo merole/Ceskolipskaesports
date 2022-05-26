@@ -1,4 +1,8 @@
-<%- include('../partials/head.ejs') %>
+    <%- include('../partials/head.ejs') %>  
+        <title>Založení účtu</title>
+        <meta name="description" content="Zaregistrujte se a účastněte turnajů jak v e-sportech tak sportech!">
+    </head>
+
 
   <body>
     <%- include('../partials/home_navbar.ejs', {user: null}) %>
@@ -29,7 +33,10 @@
                             <button type="submit" id="register button" class="mb-2 mx-16 rounded-full py-1 px-24 text-center font-bold bg-gradient-to-r text-white from-red-600 to-gray-800  hover:from-gray-800 hover:to-red-600">REGISTROVAT</button> <br>
                             <a id="login_instead" class="mb-2 mx-16 rounded-full py-1 px-24" href="/login">Přihlásit se</a>
                         </div>
-                        <%- include("../partials/messages") %>
+                        <% if (typeof messages != undefined && messages.length > 0) {messages.forEach(message => { %>
+                            <%- include("../partials/messages", {message: message}) %>
+                        <% }); } %>
+                        
                     </form>
                 </div>
             </div>

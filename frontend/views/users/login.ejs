@@ -1,4 +1,8 @@
-<%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>  
+<title>Přihlášení</title>
+<meta name="description" content="Přihlášení do Vašeho účtu">
+</head>
+
 
   <body>
     <%- include('../partials/home_navbar.ejs', {user: null}) %>
@@ -22,9 +26,11 @@
                       </div>
                       <div class="py-2 px-4 place-content-center">
                         <% if (messages) { %>
-                            <div class="block text-gray-700 bg-red-400 text-sm font-bold mb-2 rounded-full pl-2 pr-2 self-center"> <%= messages %> </div>
+                            <div class="bg-red-100 rounded-lg py-2 px-4 mb-2 text-base text-red-700"> <%= messages %> </div>
                             <% if (messages.includes("Pros")) { %>
-                                <a class="text-gray-700 bg-blue-400 text-sm mb-3 hover:text-purple-600 rounded-full pl-2 pr-2 text-center self-center" href="/users/send_again" name="send_again">Poslat e-mail znovu</a>
+                                <form action="/users/send-email" method="post">
+                                    <button type="submit" class="text-gray-700 bg-blue-400 text-sm mb-3 hover:text-purple-600 rounded-full pl-2 pr-2 text-center self-center" name="send-email">Poslat e-mail znovu</a>
+                                </form>
                             <% } %>
                         <%  } %>
                       </div>

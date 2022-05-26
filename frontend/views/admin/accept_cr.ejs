@@ -1,19 +1,27 @@
-<%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>  
+<meta name="robots" content="noindex" />
+</head>
+<body>
+    <%- include("../partials/adm_navbar") %>
     <div class="flex flex-col w-full justify-center">
         <% locals.players.forEach(player => { %>
             <form method="post" action="/admin/accept-cr">
+                <input type="hidden" name="admin" value="<%= admin.name %>">
                 <input name="name" value="<%= player.name %>" class="hidden">
                 <div class="flex flex-col bg-slate-400 w-8/12 border-2 border-red-500">
                     <div class="adm-div-1">
                         <%= player.link %>
                     </div>
                     <div class="flex">
-                        <div class="adm-div-2">
+                        <div class="adm-div-3">
                             <%= player.name %>
                         </div>
-                        <div class="adm-div-2">
+                        <div class="adm-div-3">
+                            <%= player.discord %>
+                        </div> 
+                        <div class="adm-div-3">
                             <%= player.email %>
-                        </div>   
+                        </div>  
                     </div>
                     <div class="flex">
                         <div class="adm-div-2">
@@ -33,3 +41,4 @@
             </form>
         <% }); %>
     </div>
+</body>

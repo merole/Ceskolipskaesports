@@ -1,5 +1,8 @@
-<%- include('../partials/head.ejs') %>
-    <!-- TODO return to home -->
+<%- include('../partials/head.ejs') %>  
+<title>Váš profil</title>
+<meta name="description" content="Uživatelský profil">
+</head>
+
     <body>
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
     <div class="flex items-center place-content-center">
@@ -30,6 +33,14 @@
                             </th>
                             <td class="px-6 py-0 font-medium text-gray-900">
                                 <%= locals.user.email %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900">
+                                Discord tag
+                            </th>
+                            <td class="px-6 py-0 font-medium text-gray-900">
+                                <%= locals.user.discord %>
                             </td>
                         </tr>
                     </tbody>

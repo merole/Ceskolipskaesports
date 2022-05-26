@@ -7,6 +7,7 @@ const Match = require('../models/match');
 const crypto = require('crypto');
 const router = require("express")();
 const passport = require('passport');
+const logger = require('../modules/logger.js');
 // This is proably required
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
@@ -39,20 +40,24 @@ router.get("/settings", (req, res, next) => {
 
 router.post("/settings", (req, res, next) => {
     if (req.isAuthenticated()) {
-        let {name_val, email_val, password_val} = req.body;
-        User.find({name: name_val})
+        let {new_name, new_email, new_password, new_discord} = req.body;
+        User.find({name: new_name})
         .then((result) => {
-            if (!result) {
+            if (result.length == 0) {
+                // Create object for setting
                 // @ts-ignore
-                [{name: name_val}, {email: email_val}, {password: password_val ? crypto.pbkdf2Sync(password_val, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}].forEach((e) => {
+                [{name: new_name}, {email: new_email}, {password: new_password ? crypto.pbkdf2Sync(new_password, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}, {discord: new_discord}].forEach((e) => {
                     if (e[Object.keys(e)[0]]) {
                         console.log(e)
                         // @ts-ignore
-                        User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {console.log(err);}});
+                        User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {logger.error(err);}});
                     }
                 });
-                req.logout();
-                res.redirect("/user");
+                // @ts-ignore
+                req.logout(function(err) {
+                    if (err) { return next(err); }
+                  res.redirect('/login');
+                });
             } else {
                 res.render("settings", {user: req.user, messages: ["Jméno již existuje"]})
             }

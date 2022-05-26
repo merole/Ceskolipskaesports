@@ -14,6 +14,10 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    discord: {
+        type: String,
+        required: true
+    },
     comment: {
         type: String,
         required: true,

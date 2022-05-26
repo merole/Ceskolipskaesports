@@ -1,13 +1,15 @@
 // @ts-check
 // Packages
-const express = require("express");
-const mongoose = require('mongoose'); 
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const passport = require('passport');
-// Probably required
-const LocalStrategy = require('passport-local').Strategy;
-const flash = require('connect-flash');
+const express = require("express"),
+ mongoose = require('mongoose'),
+ session = require("express-session"),
+ MongoStore = require("connect-mongo"),
+ passport = require('passport'),
+ winston = require('winston'),
+ expressWinston = require('express-winston'),
+ // Probably required
+ LocalStrategy = require('passport-local').Strategy,
+ logger = require('./modules/logger.js')
 
 
 require('dotenv').config();
@@ -26,7 +28,7 @@ const db_string = process.env.DB_STRING
 // @ts-ignore
 mongoose.connect(db_string, {useNewUrlParser: true, useUnifiedTopology : true})
 .then(() => app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT} and connected to DB!`)))
-.catch((err)=> console.log(err));                                                                                
+.catch((err)=> {logger.error(err)});                                                                                
 
 // Session middleware setup, this is used by protected URLs, such as /user in users.js
 let sessionStore = MongoStore.create({
@@ -46,8 +48,30 @@ app.use(
 // Passport setup for login and cookies
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 app.use(express.static('../frontend/static'));
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  ),
+  meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+  msg: "HTTP {{req.method}} {{req.url}} Response time:{{res.responseTime}}ms", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+  expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+  colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+
+}));
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  )
+}));
 
 
 
