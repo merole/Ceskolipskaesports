@@ -9,7 +9,7 @@ const passport = require('passport');
 // This is proably required
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
-const logger = require('../modules/logger.js');
+const logger = require('../modules/logger');
 const createTransporter = require('../modules/transporter')
 
 router.set('views', '../frontend/views/users');
