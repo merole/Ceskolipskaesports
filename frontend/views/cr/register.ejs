@@ -7,7 +7,7 @@
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
     <div class="flex bg-slate-100 items-center justify-center my-5 w=full">
         <div class="items-center -mx-3 mb-6 bg-slate-100 w-6/12 p-4 rounded shadow">
-            <form class="flex flex-col place-content-center items-center" method="post">
+            <form class="flex flex-col items-center justify-center items-center" method="post">
                 <label class="block self-start uppercase tracking-wide text-gray-700 text-[20px] font-bold mb-2">
                     Clash Royale invite link
                 </label>
@@ -25,7 +25,7 @@
                 <% } %>
                 <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Přihláška musí být schválena, po potvrzení Vám přijde e-mail</div>
                 <% if (locals.messages) {locals.messages.forEach((message) => { %>
-                    <%- include('../partials/messages.ejs', {message: message}) %>
+                    <%- include('../partials/messages.ejs', {message: message, type: locals.type}) %>
                 <% });} %>
             </form>
         </div>

@@ -6,6 +6,7 @@ const router = require("express")();
 const passport = require('passport');
 const multer = require("multer");
 const fs = require("fs");
+const flash = require("connect-flash");
 const logger = require('../modules/logger.js');
 // This is proably required
 const LocalStrategy = require('passport-local').Strategy;
@@ -64,10 +65,13 @@ router.get("/register", (req, res, next) => {
         Player.exists({name: req.user.name})
         .then((result) => {
             if (result) {
-                res.redirect("/user");
+                Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
+                .then((matches_res) => {
+                    res.render("../user/profile", {user: req.user, messages: ["Přihláška již odeslána"], type: "alert", matches: matches_res});
+                });
             }
             else {
-                res.render("register", {user: req.user});
+                res.render("register");
             }
         });
     } else {
@@ -96,7 +100,7 @@ router.post("/register", (req, res, next) => {
     }
 
     if (errors.length > 0) {
-        res.render("register", {user: req.user, messages: errors});
+        res.render("register", {user: req.user, messages: errors, type: "alert"});
     } else {
         // TODO Times
         const player = new Player(

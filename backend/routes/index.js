@@ -13,17 +13,18 @@ router.get('/login', (req, res, next) => {
   // Instead of creating a new thing
   // Also there is zero documentation for this so ¯\_(ツ)_/¯
   // "Nehas, co nepálí"
+  // TODO properly add send email again
   // @ts-ignore
   if (req.session.flash && req.session.flash.error) {
     // @ts-ignore
-    res.render('../users/login', {messages: req.session.flash.error.slice(-1)});
+    res.render('../users/login', {messages: [req.session.flash.error.slice(-1)], type: "alert"});
   } else {
     res.render('../users/login', {messages: null});
   }
 });
 
 router.get('/register', (req, res, next) => {
-    res.render('../users/register', {messages: []});
+    res.render('../users/register', {messages: null});
 });
 
 router.get('/contact', (req, res, next) => {

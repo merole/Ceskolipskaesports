@@ -5,9 +5,9 @@
     <%- include('../partials/adm_navbar.ejs') %>
     <div class="flex flex-col justify-center items-center">
         <form action="/admin/add-match" method="post">
-            <input name="player1"  class="place-content-center items-center" placeholder="player1">
-            <input name="player2"  class="place-content-center items-center" placeholder="player2">
-            <input type="datetime-local" name="maxDate" class="place-content-center items-center" placeholder="Max date"> 
+            <input name="player1"  class="items-center justify-center items-center" placeholder="player1">
+            <input name="player2"  class="items-center justify-center items-center" placeholder="player2">
+            <input type="datetime-local" name="maxDate" class="items-center justify-center items-center" placeholder="Max date"> 
             <button type="submit">Submit</button>
             <input type="hidden" name="admin" value="<%= admin.name %>"> 
         </form>

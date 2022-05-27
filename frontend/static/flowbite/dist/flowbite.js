@@ -1,7 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 var __webpack_exports__ = {};
-console.log("using flowbite");
 
 // UNUSED EXPORTS: default
 

@@ -1,6 +1,7 @@
 // @ts-check
 // Packages
 const User = require('../models/user');
+const Token = require('../models/password_token');
 const crypto = require('crypto');
 const url = require("url");
 const router = require("express")();
@@ -110,10 +111,10 @@ router.get("/confirm", (req, res, next) => {
   let params = url.parse(req.url,true).query;
   User.findById(params.id).
   then((result) => {
-    logger.log(`${req.user} CREATED and account`)
+    logger.log(`${req.user.name} CREATED and account`)
   })
   User.findByIdAndUpdate(params.id, { $set: {active: true}}, (err) => {err});
-  res.render("login", {messages: ["Účet potvrzen"]});
+  res.render("login", {messages: ["Účet potvrzen"], type: "primary"});
 });
 
 router.post('/logout',(req, res, next)=>{
@@ -140,7 +141,7 @@ router.post("/send_again", (req, res, next) => {
           to: email,
           subject: 'Potvrďte svůj účet',
           text: "Potvrďte zde: " + process.env.URL + "users/confirm/?id=" + id
-        }
+        };
       
         // Use only with transporter
         const sendEmail = async (emailOptions) => {
@@ -150,10 +151,75 @@ router.post("/send_again", (req, res, next) => {
         sendEmail(mail_options);
         res.render("login", {messages: null });
       } else {
-        logger.log("Someone tried to resend mail with an active account")
+        logger.log(`${email} tried to resend mail with an active account`)
         res.send("no");
       }
     });
 });
+
+router.get("/reset-password", (req, res, next) => {
+  res.render("reset_password");
+});
+
+router.post("/reset-password", (req, res, next) => {
+  let {email} = req.body;
+
+  User.findOne({email: email})
+  .then((result) => {
+    let token = new Token({
+      email: email,
+      token: crypto.randomBytes(12).toString("hex")
+    });
+    token.save();
+    let mail_options = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Obnovení hesla",
+      html: `Obnovte si heslo zde: ${process.env.URL}users/reset_password/?token=${token.token} <br> Tento odkaz vyprší za 15 minut`
+    };
+    const sendEmail = async (emailOptions) => {
+      let emailTransporter = await createTransporter();
+      await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
+    };
+    sendEmail(mail_options);
+    res.render("login", {messages: ["Odkaz odeslán na e-mail"], type: "primary"});
+  });
+});
+
+router.get("/reset_password", (req, res, next) => {
+  let params = url.parse(req.url,true).query;
+  Token.findOne({token: params.token})
+  .then((result) => {
+    if (result != null) {
+      let _15MIN_IN_MS = 900000;
+      let now = new Date();
+      if (result && result.createdAt.getTime() + _15MIN_IN_MS >= now.getTime()) {
+        res.render("set_password", {email: result.email, token: result.token, message: null});
+      } else {
+        res.render("../partials/error", {message: "Odkaz vypršel", type: "alert"});
+      }
+    } else {
+      res.render("../partials/error", {message: "Neplatný odkaz", type: "alert"});
+    }
+  });
+});
+
+router.post("/reset_password", (req, res, next) => {
+  let {token, email, new_password, new_password_again} = req.body;
+  Token.findOne({token: token, email: email})
+  .then((result) => {
+      if (new_password == new_password_again) {
+        User.findOne({email: email})
+        .then((result) => {
+          User.findOneAndUpdate({email: email}, {$set: {password: crypto.pbkdf2Sync(new_password, result.salt, 10000, 64, process.env.PASS_HASH).toString("hex")}}, ((err)=>{if(err){logger.error(err);}}));
+          res.render("login", {messages: ["Heslo změněno úspěšně"], type: "primary"})
+        })
+      } else {
+        res.render("set_password", {email: result.email, token: result.token, message: "Hesla se musí shodovat", type: "alert"});
+      }
+    }
+  );
+});
+
 
 module.exports = router;

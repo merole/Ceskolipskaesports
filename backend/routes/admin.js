@@ -30,10 +30,10 @@ router.get("/", (req, res, next) => {
         Match.find({})
         .then( (result) => {
             result.sort((a, b) => {
-                if (a.finished == "unfinished" && b.finished != "unfinished") {
-                    return 1;
-                } else if (b.finished == "unfinished" && a.finished != "unfinished") {
+                if (a.result == "unfinished" && b.result != "unfinished") {
                     return -1;
+                } else if (b.result == "unfinished" && a.result != "unfinished") {
+                    return 1;
                 } else {
                     return 0;
                 }
@@ -44,7 +44,7 @@ router.get("/", (req, res, next) => {
         
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
@@ -52,10 +52,10 @@ router.get("/", (req, res, next) => {
 router.post("/add-match", (req, res, next) => {
     if (checkAuth(req)) {
         let {player1, player2, maxDate} = req.body;
-        Player.findOne({name: player1})
-        .then((result2) => {
-            Player.findOne({name: player2})
-            .then((result1) => {
+        User.findOne({name: player1})
+        .then((result1) => {
+            User.findOne({name: player2})
+            .then((result2) => {
                 const match = new Match(
                     {
                         player1: player1,
@@ -65,7 +65,7 @@ router.post("/add-match", (req, res, next) => {
                         maxDate: maxDate
                     });
                 // @ts-ignore
-                logger.log(`${req.user}$ ADDED match ${player1} vs ${player2} TIME: ${date}`)
+                logger.log(`${req.user.name}$ ADDED match ${player1} vs ${player2} TIME: ${date}`)
                 match.save();
                 res.redirect("/admin");
             });
@@ -74,7 +74,7 @@ router.post("/add-match", (req, res, next) => {
 
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
@@ -89,7 +89,7 @@ router.post("/add-matches", (req, res, next) => {
         let {match_str} = req.body;
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 })
@@ -108,7 +108,7 @@ router.post("/result", (req, res, next) => {
         res.redirect("/admin")
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
@@ -124,7 +124,7 @@ router.get("/accept-cr", (req, res, next) => {
          });
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });
@@ -150,16 +150,17 @@ router.post("/accept-cr", async (req, res, next) => {
                 let emailTransporter = await createTransporter();
                 await emailTransporter.sendMail(mail_options, (err) => {if(err) {logger.error(err);}});
                 // @ts-ignore
-                logger.log(`${req.user} ACCEPTED ${name}`)
+                logger.log(`${req.user.name} ACCEPTED ${name}`);
             });
 
         } else if (deny) {
             Player.findOneAndDelete({name: name}, (err) => {if(err){logger.error(err);}});
+            logger.log(`${req.user.name} DENIED ${name}`);
         }
         res.redirect("/admin/accept-cr");
     } else {
         // @ts-ignore
-        logger.log(`${req.user} FAILED TO ACCES the admin page TIME: ${date}`);
+        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
         res.redirect("/login");
     }
 });

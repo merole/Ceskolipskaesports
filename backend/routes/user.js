@@ -3,11 +3,13 @@
 // TODO this should really be called "account.js"...
 const User = require('../models/user');
 const Match = require('../models/match');
+const Player = require('../models/player');
 const crypto = require('crypto');
 const router = require("express")();
 const passport = require('passport');
 const logger = require('../modules/logger.js');
 // This is proably required
+// @ts-ignore
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
 
@@ -16,12 +18,19 @@ router.set('views', '../frontend/views/user');
 require('dotenv').config();
 //------
 
+// @ts-ignore
 router.get("/", (req, res, next) => {
     if (req.isAuthenticated()) {
         // @ts-ignore
-        let match = Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
+        Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
          .then((result) => {
-            res.render("profile", {user: req.user, matches: result});
+            // @ts-ignore
+            Player.find({name: req.user.name})
+            // Only for cr tournament
+            .then((player) => {
+                // @ts-ignore
+                res.render("profile", {user: req.user, matches: result, messages: undefined, playing: player[0].active});
+            });
          });
         
     } else {
@@ -29,6 +38,7 @@ router.get("/", (req, res, next) => {
     }
 });
 
+// @ts-ignore
 router.get("/settings", (req, res, next) => {
     if (req.isAuthenticated()) {
         res.render("settings", {user: req.user});
@@ -57,7 +67,7 @@ router.post("/settings", (req, res, next) => {
                   res.redirect('/login');
                 });
             } else {
-                res.render("settings", {user: req.user, messages: ["Jméno již existuje"]})
+                res.render("settings", {user: req.user, messages: ["Jméno již existuje"], type: "alert"})
             }
         });
     } else {

@@ -9,7 +9,9 @@ const express = require("express"),
  expressWinston = require('express-winston'),
  // Probably required
  LocalStrategy = require('passport-local').Strategy,
- logger = require('./modules/logger.js')
+ logger = require('./modules/logger.js'),
+ // This is used by passport.js
+ flash = require('connect-flash')
 
 
 require('dotenv').config();
@@ -21,6 +23,7 @@ app.use(express.urlencoded({extended : false}));
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(flash());
 
 
 //mongoose

@@ -24,7 +24,7 @@
                         <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
                             <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrace končí: <div class="ml-1 text-gray-500 text-ms"> <!-- TODO Datum konce reg --> </div>
                             </div>
-                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> <%= user.name == "matygam09" ? "69 bussy coinů" : "30 Kč" %></div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> <%= (user && user.name) == "matygam09" ? "69 bussy coinů" : "30 Kč" %></div>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
     <div class="flex relative items-center justify-center font-montserrat bg-slate-300">
         <div class="grid grid-cols-2 w-full sm:w-9/12 self-center xl:grid-cols-4 justify-items-center bg-slate-300 py-4">
             <div class="col-span-1 content-center">
-                <a href="ceskolipska_esports">
+                <a href="https://www.instagram.com/ceskolipska_esports/">
                     <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/images/instagram.svg">
                     <p class="text-center text-rose-800">Sledujte Výsledky!</p>
                 </a>
