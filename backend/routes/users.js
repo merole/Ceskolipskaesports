@@ -23,9 +23,9 @@ router.post('/login',
     failureRedirect: "/login"}),
     (req, res, next) => {
       console.log(req.session)
-      if (req.session && req.session.redirectTo) {
-        res.redirect(req.session.redirectTo);
-        delete req.session.redirectTo;
+      if (req.session.cookie && req.session.cookie.redirectTo) {
+        res.redirect(req.session.cookie.redirectTo);
+        delete req.session.cookie.redirectTo;
       } else {
         res.redirect("/");
       }
