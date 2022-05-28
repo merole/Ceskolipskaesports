@@ -17,17 +17,14 @@ router.set('views', '../frontend/views/users');
 require('dotenv').config();
 //------
 
-const checkRedit = (req, res, next) => {
-  
-};
-
 // Setup for transporter for sending confim emails
 router.post('/login', 
   passport.authenticate("user", { 
     failureRedirect: "/login"}),
     (req, res, next) => {
       if (req.session && req.session.redirectTo) {
-        res.redirect("/cr/register");
+        res.redirect(req.session.redirectTo);
+        delete req.session.redirectTo;
       } else {
         res.redirect("/");
       }
