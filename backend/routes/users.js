@@ -26,7 +26,7 @@ router.post('/login',
       if (params.redirect) {
         res.redirect(params.redirect);
       } else {
-        res.redicter("/");
+        res.redirect("/");
       }
     }
 );
