@@ -22,6 +22,7 @@ router.post('/login',
   passport.authenticate("user", { 
     failureRedirect: "/login"}),
     (req, res, next) => {
+      console.log(req.session)
       if (req.session && req.session.redirectTo) {
         res.redirect(req.session.redirectTo);
         delete req.session.redirectTo;
