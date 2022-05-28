@@ -17,12 +17,7 @@ router.set('views', '../frontend/views/users');
 require('dotenv').config();
 //------
 
-// Passport setup used by login and protected urls
-
-
 // Setup for transporter for sending confim emails
-
-
 router.post('/login',
   passport.authenticate("user", { 
     failureRedirect: "/login", 
@@ -216,7 +211,8 @@ router.post("/reset_password", (req, res, next) => {
       if (new_password == new_password_again) {
         User.findOne({email: email})
         .then((result) => {
-          User.findOneAndUpdate({email: email}, {$set: {password: crypto.pbkdf2Sync(new_password, result.salt, 10000, 64, process.env.PASS_HASH).toString("hex")}}, ((err)=>{if(err){logger.error(err);}}));
+          let password = crypto.pbkdf2Sync(new_password, result.salt, 10000, 64, process.env.PASS_HASH).toString("hex");
+          User.findOneAndUpdate({email: email}, {$set: {password: password}}, ((err)=>{if(err){logger.error(err);}}));
           res.render("login", {messages: ["Heslo změněno úspěšně"], type: "primary"})
         })
       } else {
