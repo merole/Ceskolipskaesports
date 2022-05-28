@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // THis is used to store user data, display nemae, check authentication
 const TokenSchema = new mongoose.Schema({
-    token: {
+    email: {
         type: String,
         required: true
     },

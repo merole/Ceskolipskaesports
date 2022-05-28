@@ -16,17 +16,25 @@ require('dotenv').config();
 let today = new Date();
 let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-const checkAuth = (req) => {
-    if (req.isAuthenticated() && req.user.role === "admin") {
-        return true;
+const checkAuth = (req, res) => {
+    if (req.isAuthenticated()) {
+            if (req.user.role === "admin") {
+            return true;
+        } else {
+            logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
+            res.redirect("/login");
+            return false;
+        }
     } else { 
+        logger.log(`unknown FAILED TO ACCESS the admin page TIME: ${date}`);
+        res.redirect("/login");
         return false;
     }
 }
 
 router.get("/", (req, res, next) => {
     // @ts-ignore
-    if (checkAuth(req)) {
+    if (checkAuth(req, res)) {
         Match.find({})
         .then( (result) => {
             result.sort((a, b) => {
@@ -41,11 +49,6 @@ router.get("/", (req, res, next) => {
             // @ts-ignore
             res.render("admin", { matches: result, admin: req.user});
         });
-        
-    } else {
-        // @ts-ignore
-        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
-        res.redirect("/login");
     }
 });
 
@@ -72,31 +75,21 @@ router.post("/add-match", (req, res, next) => {
         });
 
 
-    } else {
-        // @ts-ignore
-        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
-        res.redirect("/login");
     }
 });
 
-// @ts-ignore
 // @ts-ignore
 router.post("/add-matches", (req, res, next) => {
     if (checkAuth(req)) {
         // TODO ukoncit registraci, vygenerovat skupiny, vygenerovat zapasy, 
         // @ts-ignore
-        // @ts-ignore
         let {match_str} = req.body;
-    } else {
-        // @ts-ignore
-        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
-        res.redirect("/login");
     }
 })
 
 // @ts-ignore
-// @ts-ignore
 router.post("/result", (req, res, next) => {
+    // TODO odeslat e-mail
     if (checkAuth(req)) {
         let {adminComment, win_1, win_2, id, update_comment} = req.body;
         if (update_comment) {
@@ -106,10 +99,6 @@ router.post("/result", (req, res, next) => {
             Match.findByIdAndUpdate(id, {$set: {adminComment: adminComment, result: win_1 ? win_1 : win_2, admin: req.user.name}}, (err) => {if(err){logger.error(err);}});
         }
         res.redirect("/admin")
-    } else {
-        // @ts-ignore
-        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
-        res.redirect("/login");
     }
 });
 
@@ -117,7 +106,7 @@ router.post("/result", (req, res, next) => {
 // @ts-ignore
 router.get("/accept-cr", (req, res, next) => {
     if (checkAuth(req)) {
-        Player.find({comment: "unchecked"})
+        Player.find({active: false})
         .then((result) => {
             // @ts-ignore
             res.render("accept_cr", {players: result, admin: req.user});
@@ -129,7 +118,6 @@ router.get("/accept-cr", (req, res, next) => {
     }
 });
 
-// @ts-ignore
 // @ts-ignore
 router.post("/accept-cr", async (req, res, next) => {
     if (checkAuth(req)) {
@@ -154,14 +142,22 @@ router.post("/accept-cr", async (req, res, next) => {
             });
 
         } else if (deny) {
-            Player.findOneAndDelete({name: name}, (err) => {if(err){logger.error(err);}});
-            logger.log(`${req.user.name} DENIED ${name}`);
+            Player.findOne({name: name})
+            .then(async (result) => {
+                let mail_options = {
+                    from: process.env.EMAIL,
+                    to: result.email,
+                    subject: 'Českolipská Esports: Clash Royale',
+                    html: `Tvoje přihláška do Clash Royale turnaje byla odmítnuta <br> Důvod: ${result.comment} <br> Pro další info kontaktuj admin tým na Discordu`
+                }
+                let emailTransporter = await createTransporter();
+                await emailTransporter.sendMail(mail_options, (err) => {if(err) {logger.error(err);}});
+                // @ts-ignore
+                logger.log(`${req.user.name} DENIED ${name}`);
+            });
+
         }
         res.redirect("/admin/accept-cr");
-    } else {
-        // @ts-ignore
-        logger.log(`${req.user.name} FAILED TO ACCESS the admin page TIME: ${date}`);
-        res.redirect("/login");
     }
 });
 module.exports = router;

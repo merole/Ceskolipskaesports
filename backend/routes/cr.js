@@ -52,7 +52,7 @@ router.post("/upload", (req, res, next) => {
 });
 
 router.get("/confirm", (req, res, next) => {
-    res.render("confirm", {user: req.user})
+    res.render("../user/profile", {user: req.user, playing: true, messages: ["Přihláška úspěšně odeslána"], type: "primary"})
 })
 
 router.get("/rules", (req, res, next) => {
@@ -67,11 +67,12 @@ router.get("/register", (req, res, next) => {
             if (result) {
                 Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
                 .then((matches_res) => {
-                    res.render("../user/profile", {user: req.user, messages: ["Přihláška již odeslána"], type: "alert", matches: matches_res});
+                    // FIXME its stupid to have this playing attr
+                    res.render("../user/profile", {user: req.user, playing:true, messages: ["Přihláška již odeslána"], type: "alert", matches: matches_res});
                 });
             }
             else {
-                res.render("register");
+                res.render("register",  {user: req.user});
             }
         });
     } else {
@@ -96,7 +97,7 @@ router.post("/register", (req, res, next) => {
         errors.push("Seznamte se s pravidly!");
     }
     if (!req.user.discord) {
-        errors.push("Nastavte si v <a class='link' href='/user/settings'> profilu</a> Váš Discord tag");
+        errors.push("Nastavte si v <a class='link' href='/user/settings'> profilu</a> Tvůj Discord tag");
     }
 
     if (errors.length > 0) {

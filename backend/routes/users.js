@@ -30,7 +30,7 @@ router.post('/login',
     failureFlash: true })
 );
 
-router.post("/register", (req, res, next) => {
+router.post("/register", async (req, res, next) => {
     
     const {name, email, password, password2} = req.body;
     let salt = crypto.randomBytes(32).toString('hex');
@@ -51,15 +51,17 @@ router.post("/register", (req, res, next) => {
     if(!name || !email || !password || !password2) {
       errors.push("Vyplňte všechna pole")
     }
-    User.find({ name: name })
+    await User.find({ name: name })
     .then((result) => {
-      if (result) {
-        errors.push("E-mailová adresa se již používá");
+      console.log(result)
+      if (result.length > 0) {
+        errors.push("Jméno se již používá");
       }
     });
-    User.find({ email: email })
+    await User.find({ email: email })
     .then((result) => {
-      if (result) {
+      console.log(result)
+      if (result.length > 0) {
         errors.push("E-mailová adresa se již používá");
       }
     });
@@ -166,23 +168,26 @@ router.post("/reset-password", (req, res, next) => {
 
   User.findOne({email: email})
   .then((result) => {
-    let token = new Token({
-      email: email,
-      token: crypto.randomBytes(12).toString("hex")
-    });
-    token.save();
-    let mail_options = {
-      from: process.env.EMAIL,
-      to: email,
-      subject: "Obnovení hesla",
-      html: `Obnovte si heslo zde: ${process.env.URL}users/reset_password/?token=${token.token} <br> Tento odkaz vyprší za 15 minut`
-    };
-    const sendEmail = async (emailOptions) => {
-      let emailTransporter = await createTransporter();
-      await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
-    };
-    sendEmail(mail_options);
-    res.render("login", {messages: ["Odkaz odeslán na e-mail"], type: "primary"});
+    if (result) {
+      let token = new Token({
+        email: email,
+        token: crypto.randomBytes(12).toString("hex")
+      });
+      token.save();
+      let mail_options = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Obnovení hesla",
+        html: `Obnovte si heslo zde: ${process.env.URL}users/reset_password/?token=${token.token} <br> Tento odkaz vyprší za 15 minut`
+      };
+      const sendEmail = async (emailOptions) => {
+        let emailTransporter = await createTransporter();
+        await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
+      };
+      sendEmail(mail_options);
+      console.log("sent")
+      res.render("login", {messages: ["Odkaz odeslán na e-mail"], type: "primary"});
+    }
   });
 });
 

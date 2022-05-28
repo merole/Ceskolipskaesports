@@ -37,7 +37,7 @@ const MatchSchema = new mongoose.Schema({
     },
     adminComment: {
         type: String,
-        default: "Komentář admina"
+        default: ""
     },
     admin: {
         type: String
