@@ -23,8 +23,9 @@ router.post('/login',
     failureRedirect: "/login"}),
     (req, res, next) => {
       let params = url.parse(req.url,true).query;
-      if (params.redirect) {
-        res.redirect(params.redirect);
+      console.log(params);
+      if (params.redirect == "rules") {
+        res.redirect(/cr/rules);
       } else {
         res.redirect("/");
       }
@@ -32,7 +33,6 @@ router.post('/login',
 );
 
 router.post("/register", async (req, res, next) => {
-    
     const {name, email, password, password2} = req.body;
     let salt = crypto.randomBytes(32).toString('hex');
     let hash = crypto.pbkdf2Sync(password, salt, 10000, 64, process.env.PASS_HASH).toString("hex");
