@@ -26,7 +26,7 @@ router.post('/login',
   passport.authenticate("user", { 
     failureRedirect: "/login"},
     (req, res, next) => {
-      if (req.session.redirectTo) {
+      if (req.session && req.session.redirectTo) {
         res.redirect("/cr/register");
       } else {
         res.redirect("/");
