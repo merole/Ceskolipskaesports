@@ -25,7 +25,7 @@ router.post('/login',
       let params = url.parse(req.url,true).query;
       console.log(params);
       if (params.redirect == "rules") {
-        res.redirect(/cr/rules);
+        res.redirect("/cr/rules");
       } else {
         res.redirect("/");
       }
