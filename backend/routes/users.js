@@ -22,12 +22,11 @@ router.post('/login',
   passport.authenticate("user", { 
     failureRedirect: "/login"}),
     (req, res, next) => {
-      console.log(req.session)
-      if (req.session.cookie && req.session.cookie.redirectTo) {
-        res.redirect(req.session.cookie.redirectTo);
-        delete req.session.cookie.redirectTo;
+      let params = url.parse(req.url,true).query;
+      if (params.redirect) {
+        res.redirect(params.redirect);
       } else {
-        res.redirect("/");
+        res.redicter("/");
       }
     }
 );

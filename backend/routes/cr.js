@@ -76,8 +76,7 @@ router.get("/register", (req, res, next) => {
             }
         });
     } else {
-        req.session.redirectTo = "/cr/register"
-        res.redirect("/login");
+        res.redirect("/login?redirect=/cr/register");
     }
 });
 
