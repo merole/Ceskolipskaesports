@@ -23,7 +23,7 @@ router.post('/login',
     failureRedirect: "/login"}),
     (req, res, next) => {
       let params = url.parse(req.url,true).query;
-      console.log(params);
+      console.log(req.urlx);
       if (params.redirect == "rules") {
         res.redirect("/cr/rules");
       } else {
