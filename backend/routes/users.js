@@ -24,14 +24,14 @@ const checkRedit = (req, res, next) => {
 // Setup for transporter for sending confim emails
 router.post('/login', 
   passport.authenticate("user", { 
-    failureRedirect: "/login"},
+    failureRedirect: "/login"}),
     (req, res, next) => {
       if (req.session && req.session.redirectTo) {
         res.redirect("/cr/register");
       } else {
         res.redirect("/");
       }
-    }) 
+    }
 );
 
 router.post("/register", async (req, res, next) => {
