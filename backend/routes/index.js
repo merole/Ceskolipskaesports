@@ -21,7 +21,6 @@ router.get('/login', (req, res, next) => {
   if (req.session.flash && req.session.flash.error) {
     let params = url.parse(req.url,true).query;
     // @ts-ignore
-    console.log(req.session.flash.error.slice(-1))
     res.render('../users/login', {messages: [req.session.flash.error.slice(-1)], type: "alert", redir: params.redirect});
   } else {
     let params = url.parse(req.url,true).query;
