@@ -20,12 +20,12 @@ require('dotenv').config();
 // Setup for transporter for sending confim emails
 router.post('/login', 
   passport.authenticate("user", { 
-    failureRedirect: "/login"}),
+    failureRedirect: "/login",
+    failureFlash: true}),
     (req, res, next) => {
       let params = url.parse(req.url,true).query;
-      console.log(req.url);
-      if (params.redirect == "rules") {
-        res.redirect("/cr/rules");
+      if (params.redirect == "register") {
+        res.redirect("/cr/register");
       } else {
         res.redirect("/");
       }
@@ -54,14 +54,12 @@ router.post("/register", async (req, res, next) => {
     }
     await User.find({ name: name })
     .then((result) => {
-      console.log(result)
       if (result.length > 0) {
         errors.push("Jméno se již používá");
       }
     });
     await User.find({ email: email })
     .then((result) => {
-      console.log(result)
       if (result.length > 0) {
         errors.push("E-mailová adresa se již používá");
       }
@@ -186,7 +184,6 @@ router.post("/reset-password", (req, res, next) => {
         await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
       };
       sendEmail(mail_options);
-      console.log("sent")
       res.render("login", {messages: ["Odkaz odeslán na e-mail"], type: "primary"});
     }
   });

@@ -43,5 +43,5 @@
 }
 
 .link-big {
-    @apply text-blue-700 font-semibold text-2xl !important
+    @apply text-blue-700 font-semibold text-6xl !important
 }

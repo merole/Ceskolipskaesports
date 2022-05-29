@@ -12,7 +12,7 @@
                 <div class="w-96 mx-auto bg-white rounded shadow items-center">
                     <div class="mx-16 py-4 px-8 text-black text-xl font-bold border-b border-grey-500 text-center">Přihlášení</div>
                     <div class="flex flex-col items-center justify-center ">
-                        <form action="/users/login" method="post" class="flex flex-col  justify-center items-center">
+                        <form action="/users/login<%= locals.redir ? '?redirect=register' : ''%> " method="post" class="flex flex-col  justify-center items-center">
                             <div class="py-2 px-4">
                                 <label class="block text-grey-darker text-sm font-bold mb-2">Tvůj e-mail</label>
                                 <input type="email" name="email" id="register_email" class=" justify-center items-center" placeholder="E-mail" >
@@ -31,7 +31,7 @@
                             </form>
                             <div class="py-2 px-4 items-center">
                             <% if (locals.messages && locals.messages.length > 0) {locals.messages.forEach(message => { %>
-                                <%- include("../partials/messages", {message: locals.message, type: locals.type}) %>
+                                <%- include("../partials/messages", {message: message, type: locals.type}) %>
                             <% }); } %>
                             </div>
                         </div>
@@ -42,4 +42,4 @@
     </body>
 </html>
 
-<%- include('../partials/footer_always_absolute.ejs') %>
+<%- include('../partials/footer_absolute.ejs') %>

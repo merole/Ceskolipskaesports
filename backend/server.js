@@ -51,6 +51,7 @@ app.use(
 // Passport setup for login and cookies
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(express.static('../frontend/static'));
 app.use(expressWinston.logger({
   transports: [

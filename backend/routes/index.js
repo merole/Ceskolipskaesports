@@ -2,12 +2,15 @@
 // Packages
 const router = require("express")();
 const logger = require('../modules/logger.js');
+const url = require("url");
+
 
 router.set('views', '../frontend/views/index');
 
 require('dotenv').config();
 //-------
 
+// TODO remake this in the style of register
 router.get('/login', (req, res, next) => {
   // For some reason passport.js in init.js appends cb message to this
   // Instead of creating a new thing
@@ -16,10 +19,14 @@ router.get('/login', (req, res, next) => {
   // TODO properly add send email again
   // @ts-ignore
   if (req.session.flash && req.session.flash.error) {
+    let params = url.parse(req.url,true).query;
     // @ts-ignore
-    res.render('../users/login', {messages: [req.session.flash.error.slice(-1)], type: "alert"});
+    console.log(req.session.flash.error.slice(-1))
+    res.render('../users/login', {messages: [req.session.flash.error.slice(-1)], type: "alert", redir: params.redirect});
   } else {
-    res.render('../users/login', {messages: null});
+    let params = url.parse(req.url,true).query;
+    // @ts-ignore
+    res.render('../users/login', {messages: null, redir: params.redirect});
   }
 });
 

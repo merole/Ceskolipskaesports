@@ -52,7 +52,7 @@ router.post("/upload", (req, res, next) => {
 });
 
 router.get("/confirm", (req, res, next) => {
-    res.render("../user/profile", {user: req.user, playing: true, messages: ["Přihláška úspěšně odeslána"], type: "primary"})
+    res.render("../user/profile", {user: req.user, playing: true, messages: ["Přihláška úspěšně odeslána"], type: "primary"});
 })
 
 router.get("/rules", (req, res, next) => {
@@ -76,7 +76,7 @@ router.get("/register", (req, res, next) => {
             }
         });
     } else {
-        res.redirect("/login?redirect=rules");
+        res.redirect("/login?redirect=register");
     }
 });
 

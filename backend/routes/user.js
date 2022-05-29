@@ -20,12 +20,10 @@ require('dotenv').config();
 
 // @ts-ignore
 router.get("/", (req, res, next) => {
-    console.log(req.user)
     if (req.isAuthenticated()) {
         // @ts-ignore
         Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
          .then((result) => {
-            // TODO find players by email, bot name
             // @ts-ignore
             Player.findOne({name: req.user.name})
             // Only for cr tournament
