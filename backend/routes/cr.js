@@ -56,7 +56,7 @@ router.get("/confirm", (req, res, next) => {
 })
 
 router.get("/rules", (req, res, next) => {
-    res.render("rules", {user: req.user});
+    res.render("cancelled", {user: req.user});
 });
 
 router.get("/register", (req, res, next) => {

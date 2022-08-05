@@ -27,15 +27,15 @@
 }
 
 .t2 {
-    @apply ml-5 font-normal text-[24px]
+    @apply ml-5 text-[24px]
 }
 
 .t3 {
-    @apply ml-10 font-normal text-[20px]
+    @apply ml-10 text-[20px]
 }
 
 .t4 {
-    @apply ml-14 font-normal text-base
+    @apply ml-14 text-base
 }
 
 .link {

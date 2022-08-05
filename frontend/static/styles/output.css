@@ -1885,12 +1885,12 @@ input:checked + .toggle-bg {
   font-weight: 600;
 }
 
-.font-normal {
-  font-weight: 400;
-}
-
 .font-extrabold {
   font-weight: 800;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .font-\[700\] {
@@ -1899,6 +1899,10 @@ input:checked + .toggle-bg {
 
 .font-medium {
   font-weight: 500;
+}
+
+.font-\[800\] {
+  font-weight: 800;
 }
 
 .uppercase {
@@ -2196,20 +2200,17 @@ input:checked + .toggle-bg {
 .t2 {
   margin-left: 1.25rem;
   font-size: 24px;
-  font-weight: 400;
 }
 
 .t3 {
   margin-left: 2.5rem;
   font-size: 20px;
-  font-weight: 400;
 }
 
 .t4 {
   margin-left: 3.5rem;
   font-size: 1rem;
   line-height: 1.5rem;
-  font-weight: 400;
 }
 
 .link {

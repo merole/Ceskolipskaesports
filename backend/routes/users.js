@@ -83,6 +83,7 @@ router.post("/register", async (req, res, next) => {
       let id;
       let mail_options;
 
+      logger.log(`${user.name} CREATED an account`);
       user.save()
       .then(res.redirect("/login"))
       .then(User.find( { name: name }))
