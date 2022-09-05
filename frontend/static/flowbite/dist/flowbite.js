@@ -1909,7 +1909,7 @@ function getViewportRect(element) {
 
 
  // Gets the entire size of the scrollable document area, even extending outside
-// of the `<html>` and `<body>` rect bounds if horizontally scrollable
+// of the `<html>` and `<body class="flex flex-col h-screen bg-white min-h-full">` rect bounds if horizontally scrollable
 
 function getDocumentRect(element) {
   var _element$ownerDocumen;

@@ -1,4 +1,10 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for ceskolipska esport site",
+  "scripts": {
+    "nodemon": "nodemon ./server.js"
+  },
   "dependencies": {
     "busboy": "^1.6.0",
     "connect-flash": "^0.1.1",

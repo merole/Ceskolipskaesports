@@ -3,7 +3,7 @@
     <meta name="description" content="Pořádáme turnaje v e-sportech hlavně pro studenty. Právě se odehrává turnaj v Clash Royale!" >
 </head>
 
-<body>
+<body class="flex flex-col h-screen bg-white min-h-full">
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
     <div class="flex flex-col items-center justify-center sm:mb-32">
         <p class="font-openSans text-5xl sm:text-5xl xl:text-8xl font-[700] my-5 w-full sm:w-7/12 text-center">ČESKOLIPSKÁ ESPORTS</p>
@@ -24,26 +24,28 @@
                         <div class="flex flex-wrap mx-5 mt-6 justify-center sm:text-justify text-base sm:text-sm ">
                             <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrace končí: <div class="ml-1 text-gray-500 text-ms"> ZRUŠENO </div>
                             </div>
-                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> <%= (user && user.name) == "matygam09" ? "69 bussy coinů" : "ZRUŠENO" %></div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 ">Registrační poplatek: <div class="ml-1 text-gray-500 text-ms"> ZRUŠENO</div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-span-1 sm:w-9/12 mt-5 bg-opacity-50 sm:border border-gray-100 rounded-lg shadow-lg bg-gradient-to-b from-gray-200 backdrop-blur-20 to-gray-50 justify-center">
-                <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
-                    <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/Valorant_art1.jpg">
-                    <div class="absolute top-10 left-6 text-[40px] text-white">Valorant</div>
-                    <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
-                </div>
-                <div class="mb-auto border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
-                    <div class="flex flex-col mx-5 mt-6 justify-center text-base sm:text-sm items-center">
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 text-center">Počet týmů: <div class="ml-1 text-gray-500 text-ms"> 8</div>
-                        </div>
-                        <div class="flex mb-2 mr-4 font-normal text-gray-700 text-center">Vyhrál: <div class="ml-1 text-gray-500 text-ms"> curanki</div>
+                <a href="/valorant/archive_2022">
+                    <div class="container relative text-sm font-medium text-gray-400 overflow-hidden">
+                        <img class="relative w-full aspect-[2/3] shadow-2xl object-cover opacity-90 hover:scale-125 transform transition duration-500" src="/images/Valorant_art1.jpg">
+                        <div class="absolute top-10 left-6 text-[40px] text-white">Valorant</div>
+                        <div class="absolute top-24 left-10 text-[30px] text-white bg-red-500 bg-opacity-50 p-2 ">Dohráno</div>
+                    </div>
+                    <div class="mb-auto border-t border-double border-b-2 sm:border-2 border-stone-600 rounded-b-lg sm:rounded-b-xl">
+                        <div class="flex flex-col mx-5 mt-6 justify-center text-base sm:text-sm items-center">
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 text-center">Počet týmů: <div class="ml-1 text-gray-500 text-ms"> 8</div>
+                            </div>
+                            <div class="flex mb-2 mr-4 font-normal text-gray-700 text-center">Vyhrál: <div class="ml-1 text-gray-500 text-ms"> curanki</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
