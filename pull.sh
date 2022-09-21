@@ -1,0 +1,1 @@
+https://merole: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@github.com/merole/Ceskolipskaesports
