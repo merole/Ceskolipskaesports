@@ -9,6 +9,7 @@ module.exports = {
         "tiro": ['Tiro Kannada', 'serif']
       }
     },
+    
   },
   plugins: [        
     require('flowbite/plugin'),
