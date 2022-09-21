@@ -11,9 +11,9 @@
             <div class="t3 ml-0">
                 <span class="font-semibold">Druhý turnaj byl ve hře Valorant, který měl sice menší hráčskou účast, ale mnohem větší diváckou účast na Twitchi.</span><br>Celkem 8 týmů se na přelomu dubna a května utkalo ve virtuálním světě, aby rozhodlo, kdo je ten nejlepší. Po 3 týdnech bojů, ve kterých všechny týmy bojovali, co to šlo se do Superfinále trunaje dostaly dva týmy BUNGA team a Curanki. Curanki nakonec vyhráli a BUNGA team tak skončili po blízké bitvě až druzí. Svoji čest obhájili také Pragováci, kterým se podařilo urvat 3. místo. <br>
             </div>
-            <img src="/images/2022_scoreboard.png" class="border-0.5 shadow-sm rounded-lg sm:hover:scale-150 hover:shadow-2xl hover:transition-all">
+            <img src="/images/2022_scoreboard.jpg" class="border-0.5 shadow-sm rounded-lg sm:hover:scale-150 hover:shadow-2xl hover:transition-all">
             <div class="t3 ml-0">
-                Po turnaji se většina týmů sešla v Proseckém amfiteátru na předání cen a poděkování. Hlavní cenou byl 3D tištěný pohár a všichni účastníci dostali medaile a nějakou mlsku 😋
+                Po turnaji se většina týmů sešla v Proseckém amfiteátru na předání cen a poděkování. Hlavní cenou byl 3D tištěný pohár a všichni účastníci dostali medaile a nějakou mlsku 😋. Fotky si můžete prohlédnout v galerii.
             </div>
             
             <div id="default-carousel" class="relative pt-4 py-6" data-carousel="static">
@@ -24,8 +24,8 @@
                         <%- include('../partials/carousel_item', {image: `/images/val-ceny/${file}`}) %>  
                     <% });  %>
                 <!-- Slider indicators -->
-                <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                    <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                <div class="absolute z-30 flex space-x-2 -translate-x-1/2 bottom-5 left-1/2">
+                    <button type="button" class="w-1 h-1 rounded-full bg-white dark:bg-gray-800" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
                     <%     for (let i=1;i<locals.files.length;i++) { %>
                         <%- include('../partials/carousel_slide_to', {num: i}) %>  
                     <% };  %>

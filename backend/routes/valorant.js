@@ -17,7 +17,9 @@ router.get("/archive_2022", (req, res, next) => {
     fs.readdir(directoryPath, function (err, files) {
         //handling error
         if (err) {
+            res.send(err);
             return console.log('Unable to scan directory: ' + err);
+            
         } 
         res.render("archive_2022", {user: req.user, files: files});
     });
