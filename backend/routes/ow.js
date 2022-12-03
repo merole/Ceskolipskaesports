@@ -19,8 +19,14 @@ require('dotenv').config();
 
 router.get("/", (req, res, next) => {
 
-    res.render("info.ejs", {user: null})
+    res.render("info.ejs", {user: null});
 
 });
+
+router.get("/pavouk", (req, res, next) => {
+
+    res.render("test.ejs", {user: req.user});
+
+})
 
 module.exports = router
