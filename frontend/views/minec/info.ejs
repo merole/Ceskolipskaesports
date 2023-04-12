@@ -1,0 +1,46 @@
+<%- include('../partials/head.ejs') %>  
+<title>Info k turnaji</title>
+<meta name="description" content="Informace k Overwatch turnaji">
+</head>
+
+<body class="flex flex-col h-full bg-gray-700">
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="flex flex-col w-full justify-center items-center">
+        <div class="container relative top-0 w-full h-full min-w-full min-h-full overflow-auto text-center">
+            <img id="cover_art" src="images/minecraft_art_2.jpg" alt="Overwatch basic art" class="h-full min-h-[80vh] object-cover brightness-50">
+            <div class="absolute top-0 left-0 text-center w-full">
+                <div class="text-7xl mt-24 text-gray-200">
+                    Už brzo budeme začínat!
+                </div>
+                <div class="hidden sm:block itext-2xl sm:text-4xl my-4 text-gray-200">
+                    Všechny informace a live updaty budou na našem Discordu! <br>
+                    Klikni zde:
+                    <br>
+                    <a href="https://discord.gg/9DJNzkCU6Q" class="text-red-600">9DJNzkCU6Q</a>
+                </div>
+                <div class="text-xl sm:text-2xl sm:mt-[20%] text-gray-200">
+                    Zápasy budou probíhat po večerech live na <a class="t3 text-blue-400 font-bold" href="https://www.twitch.tv/ceskolipskaesports"> Twitchi</a> a krátké videa najdete na <a class="t3 text-blue-400 font-bold" href="https://www.instagram.com/ceskolipska_esports/">Našem Instagramu</a>!
+                    <br>
+                    Později se zde objeví tabulka se všemi výsledky, tak se sem nezapomeňte pravidelně vracet.
+                </div>
+            </div>
+            <div class="flex relative items-center justify-center font-montserrat bottom-0 bg-transparent">
+                <div class="grid grid-cols-2 w-full sm:w-9/12 self-center xl:grid-cols-2 justify-items-center py-4">
+                    <div class="col-span-1 p-4 rounded-md content-center bg-gradient-to-bl from-cyan-500 to-transparent bg-opacity-10">
+                        <a href="https://www.instagram.com/ceskolipska_esports/">
+                            <img class="overflow-hidden w-[150px] hover:scale-[1.05] transform transition duration-500" src="/images/instagram.svg">
+                            <p class="text-center text-rose-800">Sledujte Výsledky!</p>
+                        </a>
+                    </div>
+                    <div class="col-span-1 p-4 rounded-md content-center bg-gradient-to-tr from-fuchsia-500 to-gray-700 bg-opacity-60">
+                        <a href="https://www.twitch.tv/ceskolipskaesports">
+                            <img class="overflow-hidden w-[150px] sm:tra hover:scale-[1.05] transform transition duration-500" src="/images/twitch.svg">
+                            <p class="text-center text-rose-800">Sledujte live!</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>

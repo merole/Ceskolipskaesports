@@ -87,3 +87,4 @@ app.use('/user', require('./routes/user'));
 app.use('/cr', require('./routes/cr'));
 app.use('/valorant', require('./routes/valorant'));
 app.use('/overwatch', require('./routes/ow'));
+app.use('/minecraft', require('./routes/minecraft'))
