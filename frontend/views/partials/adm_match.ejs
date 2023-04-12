@@ -35,7 +35,7 @@
         </div>
         <div class="flex mb-4">
             <div class="adm-div-1">
-                <input name="adminComment" type="text" value="<%= match.adminComment %>" class="self-center w-7/12">
+                <input name="adminComment" type="text" placeholder="Komentář admina" value="<%= match.adminComment %>" class="self-center w-7/12">
                 <button type="submit" name="update_comment" type="button" class="adm-btn" value="true">Upravit komentář</button>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 </div>
             <% } else { %>
                 <div class="adm-div-1">
-                    <p class="text-[5vw]">VYHRÁL <%= match.result %>! </p>
+                    <p class="text-[5vw]">VYHRÁL <%= match.result %>! Přijato: <%= match.admin %></p>
                 </div>
             <% } %>
         </form>

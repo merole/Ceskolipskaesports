@@ -1,76 +1,38 @@
 // @ts-check
 // Packages
 const User = require('../models/user');
+const Token = require('../models/password_token');
 const crypto = require('crypto');
-const { google } = require("googleapis");
-const nodemailer = require('nodemailer');
 const url = require("url");
 const router = require("express")();
 const passport = require('passport');
 // This is proably required
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
+const logger = require('../modules/logger');
+const createTransporter = require('../modules/transporter')
 
 router.set('views', '../frontend/views/users');
 
 require('dotenv').config();
 //------
 
-// Passport setup used by login and protected urls
-
-
 // Setup for transporter for sending confim emails
-const OAuth2 = google.auth.OAuth2;
-const {CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, EMAIL} = 
-  process.env;
-const createTransporter = async () => {
-  const oauth2Client = new OAuth2(
-    CLIENT_ID,
-    CLIENT_SECRET,
-    'https://developers.google.com/oauthplayground'
-  );
-
-  oauth2Client.setCredentials({
-    refresh_token: process.env.REFRESH_TOKEN
-  });
-
-  const accessToken = await new Promise((resolve, reject) => {
-    oauth2Client.getAccessToken((err, token) => {
-      if (err) {
-        console.log(err);
-        reject();
-      }
-      resolve(token);
-    });
-  });
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: EMAIL,
-      accessToken,
-      clientId: CLIENT_ID,
-      clientSecret:CLIENT_SECRET,
-      refreshToken:REFRESH_TOKEN
-    }
-  });
-
-  return transporter;
-};
-
-router.post('/login',
+router.post('/login', 
   passport.authenticate("user", { 
-    failureRedirect: "/login", 
-    // TODO redirect to /user
-    successRedirect: "/",
-    failureFlash: true })
+    failureRedirect: "/login",
+    failureFlash: true}),
+    (req, res, next) => {
+      let params = url.parse(req.url,true).query;
+      if (params.redirect == "register") {
+        res.redirect("/cr/register");
+      } else {
+        res.redirect("/");
+      }
+    }
 );
 
-//TODO logging
-router.post("/register", (req, res, next) => {
-    
-  // TODO unique name
+router.post("/register", async (req, res, next) => {
     const {name, email, password, password2} = req.body;
     let salt = crypto.randomBytes(32).toString('hex');
     let hash = crypto.pbkdf2Sync(password, salt, 10000, 64, process.env.PASS_HASH).toString("hex");
@@ -90,15 +52,15 @@ router.post("/register", (req, res, next) => {
     if(!name || !email || !password || !password2) {
       errors.push("Vyplňte všechna pole")
     }
-    User.find({ name: name })
+    await User.find({ name: name })
     .then((result) => {
-      if (result) {
-        errors.push("E-mailová adresa se již používá");
+      if (result.length > 0) {
+        errors.push("Jméno se již používá");
       }
     });
-    User.find({ email: email })
+    await User.find({ email: email })
     .then((result) => {
-      if (result) {
+      if (result.length > 0) {
         errors.push("E-mailová adresa se již používá");
       }
     });
@@ -121,8 +83,8 @@ router.post("/register", (req, res, next) => {
       let id;
       let mail_options;
 
+      logger.log(`${user.name} CREATED an account`);
       user.save()
-      .then((console.log("Posted" + name)))
       .then(res.redirect("/login"))
       .then(User.find( { name: name }))
       .then((result) => {
@@ -138,9 +100,8 @@ router.post("/register", (req, res, next) => {
         // Use only with transporter
         const sendEmail = async (emailOptions) => {
           let emailTransporter = await createTransporter();
-          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log("4")}});
+          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
         };
-        // TODO check if active
         sendEmail(mail_options);
         }
       );
@@ -150,48 +111,120 @@ router.post("/register", (req, res, next) => {
 
 router.get("/confirm", (req, res, next) => {
   let params = url.parse(req.url,true).query;
-  console.log(params.id);
   User.findById(params.id).
   then((result) => {
-    console.log(result)
+    logger.log(`${req.user.name} CREATED and account`)
   })
   User.findByIdAndUpdate(params.id, { $set: {active: true}}, (err) => {err});
-  res.render("confirm");
+  res.render("login", {messages: ["Účet potvrzen"], type: "primary"});
 });
 
-router.get('/logout',(req,res)=>{
-  req.logout();
-  req.flash('success_msg','Now logged out');
-  res.redirect('/'); 
+router.post('/logout',(req, res, next)=>{
+  // @ts-ignore
+  req.logout(function(err) {
+      if (err) { return next(err); }
+    res.redirect('/');
+  });
 });
 
-router.get("/send_again", (req, res) => {
+router.post("/send-email", (req, res, next) => {
   res.render("send_again");
 });
 
-//TODO logging
-router.post("/send_again", (req, res) => {
+router.post("/send_again", (req, res, next) => {
   let {email} = req.body;
   
   User.findOne( {email: email})
    .then( (result) => {
-     let id = result._id;
-     let mail_options = {
-      from: process.env.EMAIL,
-      to: email,
-      subject: 'Potvrďte svůj účet',
-      text: "Potvrďte zde: " + process.env.URL + "users/confirm/?id=" + id
-    }
-  
-    // Use only with transporter
-    const sendEmail = async (emailOptions) => {
-      let emailTransporter = await createTransporter();
-      await emailTransporter.sendMail(emailOptions, (err) => {if(err) {console.log("4")}});
-    };
-    // TODO check if active
-    sendEmail(mail_options);
-    res.render("login", {messages: null });
-   });
+     if (!result.active) {
+        let id = result._id;
+        let mail_options = {
+          from: process.env.EMAIL,
+          to: email,
+          subject: 'Potvrďte svůj účet',
+          text: "Potvrďte zde: " + process.env.URL + "users/confirm/?id=" + id
+        };
+      
+        // Use only with transporter
+        const sendEmail = async (emailOptions) => {
+          let emailTransporter = await createTransporter();
+          await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
+        };
+        sendEmail(mail_options);
+        res.render("login", {messages: null });
+      } else {
+        logger.log(`${email} tried to resend mail with an active account`)
+        res.send("no");
+      }
+    });
 });
+
+router.get("/reset-password", (req, res, next) => {
+  res.render("reset_password");
+});
+
+router.post("/reset-password", (req, res, next) => {
+  let {email} = req.body;
+
+  User.findOne({email: email})
+  .then((result) => {
+    if (result) {
+      let token = new Token({
+        email: email,
+        token: crypto.randomBytes(12).toString("hex")
+      });
+      token.save();
+      let mail_options = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Obnovení hesla",
+        html: `Obnovte si heslo zde: ${process.env.URL}users/reset_password/?token=${token.token} <br> Tento odkaz vyprší za 15 minut`
+      };
+      const sendEmail = async (emailOptions) => {
+        let emailTransporter = await createTransporter();
+        await emailTransporter.sendMail(emailOptions, (err) => {if(err) {logger.error(err);}});
+      };
+      sendEmail(mail_options);
+      res.render("login", {messages: ["Odkaz odeslán na e-mail"], type: "primary"});
+    }
+  });
+});
+
+router.get("/reset_password", (req, res, next) => {
+  let params = url.parse(req.url,true).query;
+  Token.findOne({token: params.token})
+  .then((result) => {
+    if (result != null) {
+      let _15MIN_IN_MS = 900000;
+      let now = new Date();
+      if (result && result.createdAt.getTime() + _15MIN_IN_MS >= now.getTime()) {
+        res.render("set_password", {email: result.email, token: result.token, message: null});
+      } else {
+        res.render("../partials/error", {message: "Odkaz vypršel", type: "alert"});
+      }
+    } else {
+      res.render("../partials/error", {message: "Neplatný odkaz", type: "alert"});
+    }
+  });
+});
+
+router.post("/reset_password", (req, res, next) => {
+  let {token, email, new_password, new_password_again} = req.body;
+  Token.findOne({token: token, email: email})
+  .then((result) => {
+      if (new_password == new_password_again) {
+        User.findOne({email: email})
+        .then((result) => {
+          let password = crypto.pbkdf2Sync(new_password, result.salt, 10000, 64, process.env.PASS_HASH).toString("hex");
+          User.findOneAndUpdate({email: email}, {$set: {password: password}}, ((err)=>{if(err){logger.error(err);}}));
+          res.render("login", {messages: ["Heslo změněno úspěšně"], type: "primary"})
+        })
+      } else {
+        res.render("set_password", {email: result.email, token: result.token, message: "Hesla se musí shodovat", type: "alert"});
+      }
+    }
+  );
+});
+
 
 module.exports = router;

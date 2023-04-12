@@ -1,19 +1,29 @@
-<%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>  
+<meta name="robots" content="noindex" />
+</head>
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include("../partials/adm_navbar") %>
+    <div class="bg-red-300 rounded-lg py-2 px-4 mb-2 text-base text-red-700 border border-red-900 text-center"> NIC NEPŘÍJMEJTE ANI NEODMÍTEJTE </div>
+    <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md text-center">To co napíšete do komentáře, se odešle e-mailem při odmítnutí, při přijetí není potřeba komentář</div>
     <div class="flex flex-col w-full justify-center">
         <% locals.players.forEach(player => { %>
-            <form method="post" action="/admin/accept-cr">
+            <form method="post" action="/admin/accept-cr" class="flex flex-col justify-center items-center">
+                <input type="hidden" name="admin" value="<%= admin.name %>">
                 <input name="name" value="<%= player.name %>" class="hidden">
                 <div class="flex flex-col bg-slate-400 w-8/12 border-2 border-red-500">
                     <div class="adm-div-1">
                         <%= player.link %>
                     </div>
                     <div class="flex">
-                        <div class="adm-div-2">
+                        <div class="adm-div-3">
                             <%= player.name %>
                         </div>
-                        <div class="adm-div-2">
+                        <div class="adm-div-3">
+                            <%= player.discord %>
+                        </div> 
+                        <div class="adm-div-3">
                             <%= player.email %>
-                        </div>   
+                        </div>  
                     </div>
                     <div class="flex">
                         <div class="adm-div-2">
@@ -33,3 +43,4 @@
             </form>
         <% }); %>
     </div>
+</body>

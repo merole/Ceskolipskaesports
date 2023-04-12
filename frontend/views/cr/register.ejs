@@ -1,10 +1,13 @@
-<%- include('../partials/head.ejs') %>
-<!-- TODO prvni redirect na stranku s pravidly -->
+<%- include('../partials/head.ejs') %>  
+<title>Registrace do Turnaje</title>
+<meta name="description" content="Registrujte se do našeho on-line i prezenčního Clash Royale turnaje. Registrace končí ...">
+</head>
+
 <body class="bg-slate-100">
-    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <%- include('../partials/home_navbar.ejs', {user: locals.user}) %>
     <div class="flex bg-slate-100 items-center justify-center my-5 w=full">
         <div class="items-center -mx-3 mb-6 bg-slate-100 w-6/12 p-4 rounded shadow">
-            <form class="flex flex-col place-content-center items-center" method="post">
+            <form class="flex flex-col items-center justify-center " method="post">
                 <label class="block self-start uppercase tracking-wide text-gray-700 text-[20px] font-bold mb-2">
                     Clash Royale invite link
                 </label>
@@ -17,9 +20,12 @@
                     </label>
                 </div>
                 <button type="submit" class="mb-2 mx-16 rounded-full py-1 px-24 text-center font-bold bg-gradient-to-r text-white from-red-600 to-gray-800  hover:from-gray-800 hover:to-red-600">Odeslat přihlášku</button> <br>
-                <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Přihláška musí být schválena, po potvrzení Vám přijde e-mail</div>
+                <% if (!locals.user.discord) { %>
+                    <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Pro přihlášení do turnaje si nastavte Discord tag <a href="/user/settings" class="link">zde</a></div>
+                <% } %>
+                <div class="text-gray-600 italic border border-cyan-100 bg-cyan-50 p-2 rounded-md">Přihláška musí být schválena, po potvrzení Ti přijde e-mail</div>
                 <% if (locals.messages) {locals.messages.forEach((message) => { %>
-                    <%- include('../partials/messages.ejs', {message: message}) %>
+                    <%- include('../partials/messages.ejs', {message: message, type: locals.type}) %>
                 <% });} %>
             </form>
         </div>

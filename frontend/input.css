@@ -10,6 +10,10 @@
     @apply flex items-center justify-center w-1/2 bg-gray-50
 }
 
+.adm-div-3 {
+    @apply flex items-center justify-center w-1/3 bg-gray-50
+}
+
 .adm-btn {
     @apply py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
 }
@@ -23,17 +27,121 @@
 }
 
 .t2 {
-    @apply ml-5 font-normal text-[24px]
+    @apply text-[24px]
 }
 
 .t3 {
-    @apply ml-10 font-normal text-[20px]
+    @apply text-[20px]
 }
 
 .t4 {
-    @apply ml-14 font-normal text-base
+    @apply text-base
 }
 
 .link {
     @apply text-blue-700 font-semibold
 }
+
+.link-big {
+    @apply text-blue-700 font-semibold text-6xl !important
+}
+
+/*
+    <a href="#round-4">Round 4</a>
+Outgoing connector
+ */
+
+ .with-connector:after {
+    content: ' ';
+    position: absolute;
+    left: calc(100% + 0.5rem); /* participant size (includes margin) */
+    width: 1.25rem; /* round margin-right */
+    border: 2px solid #e2e8f0;
+    border-left: none;
+  }
+  
+  .with-connector:nth-child(odd):after {
+    top: 50%;
+    border-bottom: none;
+  }
+  
+  .with-connector:nth-child(even):after {
+    bottom: 50%;
+    border-top: none;
+  }
+  
+  /* 
+    height formula for a given round connector: 
+    connectorHeight(roundNumber) = (margin + (lineHeight + padding)/2) * r^(n-1)
+  
+    where:
+    - margin = 8px (.m-2)
+    - line-height = 24px (.leading-relaxed)
+    - padding = 4px (.p-1)
+  */ 
+  .round:nth-child(1) .with-connector:after {
+    height: 25px;
+  }
+  
+  .round:nth-child(2) .with-connector:after {
+    height: 60px;
+  }
+  
+  .round:nth-child(3) .with-connector:after {
+    height: 100px;
+  }
+  
+  .round:nth-child(4) .with-connector:after {
+    height: 200px;
+  }
+  
+  .round.round-winner .with-connector:after {
+    width: 0;
+  }
+  
+  /*
+    Incoming connector
+   */
+  .round + .round .with-connector:before {
+    content: ' ';
+    position: absolute;
+    left: -1.75rem; /* competitor margin + current width */
+    top: 50%;
+    width: 1.25rem; /* round margin-left */
+    border-top: 2px solid #e2e8f0;
+  }
+  /* 
+    Byes
+  */ 
+  
+  .with-connector.with-bye {
+    margin-top: 33px;
+    margin-bottom: 33px;
+  }
+  
+  .round .with-connector.with-bye:after {
+    height: 0;
+  }
+  
+  .with-connector.with-bye + .with-connector {
+    display: none;
+  }
+  
+  /* second option for byes */
+  /*
+  .with-bye + .with-connector {
+    visibility: hidden
+  }
+  */
+  
+  /* third option for byes */
+  /*
+  .with-bye,
+  .with-bye + .with-connector {
+    visibility: hidden
+  }
+  
+  .round .with-connector.from-bye:before {
+    width: 0
+  }
+  */

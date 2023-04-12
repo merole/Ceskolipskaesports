@@ -1,21 +1,28 @@
-<%- include('../partials/head.ejs') %>
-<!-- TODO prvni redirect na stranku s pravidly -->
-<body>
+<%- include('../partials/head.ejs') %>  
+<title>Info k turnaji</title>
+<meta name="description" content="Informace ke Clash Royale Turnaji">
+</head>
+
+<body class="flex flex-col h-screen bg-white min-h-full">
     <%- include('../partials/home_navbar.ejs', {user: user}) %>
     <div class="flex flex-col w-full justify-center items-center">
-        <div class="text-6xl md:text-9xl font-openSans mt-12">CLASH ORÁL</div>
+        <div class="text-6xl md:text-9xl mt-12 font-openSans">CLASH ROYALE</div>
         <div class="flex w-11/12 md:w-8/12 justify-center items-center my-20">
             <div class="flex flex-col w-10/12 space-y-4 justify-center">
                 <div class="flex flex-col space-y-1">
                     <p class="t1">Info pro zájemce</p>
                         <p class="t2">1. Discord</p>
                             <p class="t3">
-                        &#8226 Pro účast v tomto turnaji je potřeba se připojit na discord server a sledovat dění (qr kod + invite)
+                                &#8226 Pro účast v tomto turnaji je potřeba se připojit na discord server a sledovat dění (qr kod + invite)
                             </p>
                         <p class="t2">2. Webstránka</p> 
-                            <p class="t3">
-                                &#8226 V průběhu turnaje bude zapisování výsledků probíhat na naší webstránce <span class="italic">ceskolipskaesports.com</span>
-                            </p>
+                            <p class="t3">&#8226 V průběhu turnaje bude zapisování výsledků probíhat na naší webstránce <span class="italic">ceskolipskaesports.com</span></p>
+                        <p class="t2">3. Zapsání do turnaje</p>
+                            <p class="t3 font-semibold italic text-red-700">&#8226 Zapisování do turnaje je on-line. Pro registraci se zatím potřeba vyplnit e-mail a in game nick v Google Formuláři níže!</p>
+                        <p class="t2">4. Poplatek</p>
+                                <p class="t3">&#8226 Registrační poplatek je 40 kč. </p>
+                                <p class="t3">&#8226 Info o uhrazení vydáme později, platit se bude buďto převodem nebo osobně u dohodnutých osob.</p>
+                        <p class="t1">&#8226 <a href="https://forms.gle/EwFetTyHwxXzARkS9" class="link-big">Zapište se zde!</a>
                     <p class="t1">Pravidla turnaje</p>
                         <p class="ml-0 mb-10 italic text-[18px] leading-5 font-normal">
                             Admini (vedoucí) soutěže mají právo na změnu/úpravu kteréhokoli pravidla jakož i rozhodnutí o udělení výjimky v konkrétním přesně definovaném případě. Veškeré zde nespecifikované případy řeší admini individuálně. 
@@ -42,8 +49,7 @@
                                 <p class="t4"><span class="font-semibold">i. </span>Systém na 4 vítězné duely 1v1 Classic, první 3 duely se odehrají s War Decky, případné další 3 duely se odehrají s novým setem War Decků, poslední deck je libovolný
                                 <p class="t4"><span class="font-semibold">ii. </span>Finále se odehraje <span class="font-extrabold">PREZENČNĚ</span>, v Praze na Proseku, datum a místo bude upřesněno</p>
                                 <p class="t4"><span class="font-semibold">iv. </span>War Decky - Hráč musí mít <span class="font-extrabold">předem připravených</span> 3 + 3 + 1 deck ve kterých se žádná karta neobjeví vícekrát, šampioni jsou v této fázi <span class="font-extrabold">povoleni</span> </p>
-
-                                    
+              
                         <p class="t2">2. Forma zápasu</p>
                             <p class="t3">Zápas</p>
                                 <p class="t4"><span class="font-semibold">i. </span>Systém zápasu je uveden pro každou fázi v dané kategorii</p>
@@ -52,7 +58,7 @@
                                     <br> Provinivší hráč obdrží napomenutí v obou případech
                                     </p>
                             <p class="t3">Odevzdání zápasu</p>
-                                <p class="t4"><span class="font-semibold">i. </span>Celý proces probíhá po přihlášení na <a href="www.ceskolipskaesports.com/user" class="link">www.ceskolipskaesports.com/user</a></p>
+                                <p class="t4"><span class="font-semibold">i. </span>Celý proces probíhá po přihlášení na <a href="https://ceskolipskaesports.com/user/" class="link"  title="Odevzdávací systém">www.ceskolipskaesports.com/user</a></p>
                                 <p class="t4"><span class="font-semibold">ii. </span>U každého zápasu je uveden konečný datum odevzdání, tento datum <span class="extrabold">NENÍ</span> možné za žádných okolností posunout</p>
                                 <p class="t4"><span class="font-semibold">iii. </span>Hráč, který se prohlašuje za vítěze je povinen doložit screenshot, popř. komentář. Situace, v kterých je potřeba doložit komentář jsou uvedeny v těchto pravidlech</p>
                                 <p class="t4"><span class="font-semibold">iv. </span>Hráč se nemůže prohlásit vítězem bez důkazu, hráč který toto pravidlo poruší dostane napomenutí, výsledek zápasu je neovlivněn</p>
@@ -61,11 +67,12 @@
                         <p class="t2">3. Komunikace</p>
                             <p class="t3"><a href=https://discord.com/invite/3NDZfuk5jp class="link">Discord</a></p>
                                 <p class="t4"><span class="font-semibold">i. </span>Veškerá komunikace s adminy probíhá přes platformu Discord</p>
-                                <p class="t4"><span class="font-semibold">ii. </span>seznam adminů</p>
+                                <p class="t4"><span class="font-semibold">ii. </span>Seznam adminů (Discord tagy): <span class="italic">Hubísek Bubísek#4480, KDW76#2135 (Já), merolé#8197, matyas#4476</span></p>
                                 <p class="t4"><span class="font-semibold">iii. </span>Hráč má povinnost číst a odpovídat na pingy od všech Moderátorů (role)</p>
                                 <p class="t4"><span class="font-semibold">iv. </span>Nedodržení tohoto pravidla může vést k vyloučení</p>
                                 <p class="t4"><span class="font-semibold">v. </span>Hráč je povinen odpovídat na komunikaci ostatních hráčů přes Discord, je možné komunikovat jiným způsobem</p>
-                                <p class="t4"><span class="font-semibold">vi. </span>Jakékoliv nemístné, obscénní, vulgární nebo urážlivé chování může vést k napomenutí nebo vyloučení</p> 
+                                <p class="t4"><span class="font-semibold">vi. </span>Jakékoliv nemístné, obscénní, vulgární nebo urážlivé chování může vést k napomenutí nebo vyloučení.</p>
+                                <p class="t4"><span class="font-semibold">vi. </span><span class="font-bold">Dvě napomenutí znamenají vyloučení</span></p>  
                 </div>
             </div>
         </div>

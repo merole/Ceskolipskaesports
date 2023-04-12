@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// THis is used to store user data, display nemae, check authentication
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,6 +10,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     }, 
+    discord: {
+        type: String,
+        required: false
+    },
     password: {
         type: String,
         required: true

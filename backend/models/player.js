@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// TODO discord tag
 const PlayerSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -11,6 +10,10 @@ const PlayerSchema = new mongoose.Schema({
         required: true
     },
     link: {
+        type: String,
+        required: true
+    },
+    discord: {
         type: String,
         required: true
     },

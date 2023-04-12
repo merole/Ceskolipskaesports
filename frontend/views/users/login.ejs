@@ -1,39 +1,45 @@
-<%- include('../partials/head.ejs') %>
+    <%- include('../partials/head.ejs') %>  
+    <title>Přihlášení</title>
+    <meta name="description" content="Přihlášení do Tvého účtu">
+    </head>
 
-  <body>
-    <%- include('../partials/home_navbar.ejs', {user: null}) %>
-    <div class="w-full bg-grey-500">
-      <div class="container mx-auto py-8">
-          <div class="w-96 mx-auto bg-white rounded shadow">
-              <div class="mx-16 py-4 px-8 text-black text-xl font-bold border-b border-grey-500 text-center">Přihlášení</div>
-              <div class="">
-                  <form action="/users/login" method="post" class="flex flex-col place-content-center items-center">
-                      <div class="py-2 px-4">
-                          <label class="block text-grey-darker text-sm font-bold mb-2">Váš e-mail</label>
-                          <input type="email" name="email" id="register_email" class="place-content-center items-center" placeholder="E-mail" >
-                      </div>
-                      <div class="py-2 px-4">
-                          <label class="block text-grey-darker text-sm font-bold mb-2">Vaše heslo</label>
-                          <input type="password" name="password" id="register_pass" class="place-content-center items-center" placeholder="Heslo">
-                      </div>
-                      <div class="py-2 px-4 place-content-center">
-                          <button type="submit" id="register button" class="mb-2 mx-16 rounded-full py-1 px-24 text-center font-bold bg-gradient-to-r text-white from-red-600 to-gray-800  hover:from-gray-800 hover:to-red-600">PŘIHLÁSIT</button> <br>
-                          <a id="login_instead" class="mb-2 mx-16 rounded-full py-1 px-24" href="/register">Registrovat</a>
-                      </div>
-                      <div class="py-2 px-4 place-content-center">
-                        <% if (messages) { %>
-                            <div class="block text-gray-700 bg-red-400 text-sm font-bold mb-2 rounded-full pl-2 pr-2 self-center"> <%= messages %> </div>
-                            <% if (messages.includes("Pros")) { %>
-                                <a class="text-gray-700 bg-blue-400 text-sm mb-3 hover:text-purple-600 rounded-full pl-2 pr-2 text-center self-center" href="/users/send_again" name="send_again">Poslat e-mail znovu</a>
-                            <% } %>
-                        <%  } %>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
-   </body>
+
+    <body class="flex flex-col h-screen bg-white min-h-full">
+        <div class="overflow-hidden h-full">
+            <%- include('../partials/home_navbar.ejs', {user: null}) %>
+            <div class="w-full bg-grey-500">
+            <div class="container mx-auto py-8">
+                <div class="w-96 mx-auto bg-white rounded shadow items-center">
+                    <div class="mx-16 py-4 px-8 text-black text-xl font-bold border-b border-grey-500 text-center">Přihlášení</div>
+                    <div class="flex flex-col items-center justify-center ">
+                        <form action="/users/login<%= locals.redir ? '?redirect=register' : ''%> " method="post" class="flex flex-col  justify-center items-center">
+                            <div class="py-2 px-4">
+                                <label class="block text-grey-darker text-sm font-bold mb-2">Tvůj e-mail</label>
+                                <input type="email" name="email" id="register_email" class=" justify-center items-center" placeholder="E-mail" >
+                            </div>
+                            <div class="py-2 px-4">
+                                <label class="block text-grey-darker text-sm font-bold mb-2">Tvoje heslo</label>
+                                <input type="password" name="password" id="register_pass" class="items-center justify-center" placeholder="Heslo">
+                            </div>
+                            
+                            <div class="flex flex-col px-4 items-center justify-center">
+                                <button type="submit" id="register button" class="rounded-full py-1 px-24 mb-2 text-center font-bold bg-gradient-to-r text-white from-red-600 to-gray-800  hover:from-gray-800 hover:to-red-600">Přihlásit</button>
+                                <a class="link text-center" href="/register">Registrovat</a>
+                                <a class="link text-center" href="/users/reset-password">Zapomněl jsi heslo?</a>
+                            </div>
+                            <div class="bg-sky-300 rounded-lg py-2 px-4 mb-2 text-base text-blue-800 border border-sky-900 text-center"> Pro dokončení registrace je potřeba potvrdit účet v e-mailu </div>
+                            </form>
+                            <div class="py-2 px-4 items-center">
+                            <% if (locals.messages && locals.messages.length > 0) {locals.messages.forEach(message => { %>
+                                <%- include("../partials/messages", {message: message, type: locals.type}) %>
+                            <% }); } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
 
-<%- include('../partials/footer.ejs') %>
+<body class="flex flex-col h-screen bg-white min-h-full">

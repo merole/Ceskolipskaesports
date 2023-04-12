@@ -6,8 +6,10 @@ module.exports = {
         'montserrat': ['Montserrat', 'sans-serif'],
         'bebasNeue': ['Bebas Neue', 'cursive'],
         'openSans': ['Open Sans',' sans-serif'],
+        "tiro": ['Tiro Kannada', 'serif']
       }
     },
+    
   },
   plugins: [        
     require('flowbite/plugin'),

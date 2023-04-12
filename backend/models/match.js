@@ -9,6 +9,14 @@ const MatchSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    discord1: {
+        type: String,
+        required: true
+    },
+    discord2: {
+        type: String,
+        required: true
+    },
     maxDate: {
         type: String,
         required: true
@@ -29,7 +37,10 @@ const MatchSchema = new mongoose.Schema({
     },
     adminComment: {
         type: String,
-        default: "Komentář admina"
+        default: ""
+    },
+    admin: {
+        type: String
     },
     result: {
         type: String,

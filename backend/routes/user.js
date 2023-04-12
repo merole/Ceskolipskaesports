@@ -1,13 +1,15 @@
 // @ts-check
 // Packages
-// TODO tidy up
 // TODO this should really be called "account.js"...
 const User = require('../models/user');
 const Match = require('../models/match');
+const Player = require('../models/player');
 const crypto = require('crypto');
 const router = require("express")();
 const passport = require('passport');
+const logger = require('../modules/logger.js');
 // This is proably required
+// @ts-ignore
 const LocalStrategy = require('passport-local').Strategy;
 require('../modules/init')(passport);
 
@@ -16,12 +18,19 @@ router.set('views', '../frontend/views/user');
 require('dotenv').config();
 //------
 
+// @ts-ignore
 router.get("/", (req, res, next) => {
     if (req.isAuthenticated()) {
         // @ts-ignore
-        let match = Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
+        Match.find({ $or: [{player1: req.user.name}, {player2: req.user.name}]})
          .then((result) => {
-            res.render("profile", {user: req.user, matches: result});
+            // @ts-ignore
+            Player.findOne({name: req.user.name})
+            // Only for cr tournament
+            .then((player) => {
+                // @ts-ignore
+                res.render("profile", {user: req.user, matches: result, messages: undefined, playing: player ? player.active : false});
+            });
          });
         
     } else {
@@ -29,6 +38,7 @@ router.get("/", (req, res, next) => {
     }
 });
 
+// @ts-ignore
 router.get("/settings", (req, res, next) => {
     if (req.isAuthenticated()) {
         res.render("settings", {user: req.user});
@@ -39,22 +49,25 @@ router.get("/settings", (req, res, next) => {
 
 router.post("/settings", (req, res, next) => {
     if (req.isAuthenticated()) {
-        let {name_val, email_val, password_val} = req.body;
-        User.find({name: name_val})
+        let {new_name, new_email, new_password, new_discord} = req.body;
+        User.find({name: new_name})
         .then((result) => {
-            if (!result) {
+            if (result.length == 0) {
+                // Create object for setting
                 // @ts-ignore
-                [{name: name_val}, {email: email_val}, {password: password_val ? crypto.pbkdf2Sync(password_val, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}].forEach((e) => {
+                [{name: new_name}, {email: new_email}, {password: new_password ? crypto.pbkdf2Sync(new_password, req.user.salt, 10000, 64, process.env.PASS_HASH).toString("hex") : null}, {discord: new_discord}].forEach((e) => {
                     if (e[Object.keys(e)[0]]) {
-                        console.log(e)
                         // @ts-ignore
-                        User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {console.log(err);}});
+                        User.findByIdAndUpdate(req.user.id, {$set: e}, (err) => {if (err) {logger.error(err);}});
                     }
                 });
-                req.logout();
-                res.redirect("/user");
+                // @ts-ignore
+                req.logout(function(err) {
+                    if (err) { return next(err); }
+                  res.redirect('/login');
+                });
             } else {
-                res.render("settings", {user: req.user, messages: ["Jméno již existuje"]})
+                res.render("settings", {user: req.user, messages: ["Jméno již existuje"], type: "alert"})
             }
         });
     } else {

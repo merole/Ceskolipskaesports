@@ -1,0 +1,17 @@
+<%- include('../partials/head.ejs') %>  
+<title>Registrace do Turnaje</title>
+<meta name="description" content="Registrujte se do našeho on-line i prezenčního Clash Royale turnaje. Registrace končí ...">
+</head>
+
+<body class="flex flex-col h-screen bg-white min-h-full">
+    <%- include('../partials/home_navbar.ejs', {user: locals.user}) %>
+    <div class="flex flex-col w-full justify center bg-slate-100">
+        <div class="flex w-full md:w-7/12 text-center">
+            Turnaj je kvůli nedostatku zájmu posunut do dalšího roku.
+        </div>
+        <div class="flex w-full md:w-7/12 items-center">
+            <img src="/images/sad.png" class="p-1 bg-white border rounded max-w-sm">
+        </div>
+    </div>
+</body>
+<%- include('../partials/footer.ejs') %>

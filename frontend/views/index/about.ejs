@@ -1,0 +1,27 @@
+<%- include('../partials/head.ejs') %>  
+<title>ČESKOLIPSKÁ ESPORTS</title>
+<meta name="description" content="Pořádáme turnaje v e-sportech hlavně pro studenty. Právě se odehrává turnaj v Clash Royale!">
+</head>
+
+<body class="flex flex-col h-screen bg-white min-h-full items-center w-full">
+    <%- include('../partials/home_navbar.ejs', {user: user}) %>
+    <div class="w-full flex flex-col space-y-7 items-center max-w-[80%]">
+        <p class="t1 mt-12 text-center">Českolipská E-sports</p>
+        <div class="w-full grid container md:grid-cols-7 md:grid-flow-col grid-flow-row grid-cols-1 gap-11">
+            <div class="container invisible md:visible md:col-span-2 text-right">
+            </div>
+            <div class="container md:col-span-3">
+                <div class="t3 pt-4">Českolipská Esports je skupina nynějších a bývalých studentů z gymnázia Českolipská, kteří pořádají ve volném čase turnaje v e-sportech pro nejen studenty. Většinu zápasů vysíláme na streamovací platformě Twitch. Veškerá komunikace probíhá přes platformu Discord. Máme dokonce vlastní servery, na kterých běží všemožné aplikace včetně těch naší výroby.</div>
+                <div class="t3 pt-4" >Cílem je dát lidem možnost zahrát si s kamarády v jednom týmu proti ostatním hráčům o různé hodnotné ceny, simulovat zážitek z E-sportu a dát lidem možnost seznámit se s ostatními a porovnat svoje schopnosti nebo se i něco přiučit. Z celého dění se snažíme přinést podívanou a zážitek i lidem, kteří nehráli.</div>
+            </div>
+            <div class="container md:col-span-2 items-center py-4">
+                <ul class="list-disc">
+                    <li class="t3 md:hover:bg-gray-200 text-gray-600"><a href="/cr/rules">Clash Royale Turnaj</a></li>
+                    <li class="t3 md:hover:bg-gray-200 text-gray-600"><a href="/valorant/archive_2022">Valorant Turnaj</a></li>
+                    <li class="t3 md:hover:bg-gray-200 text-gray-500"><a href="#">League of Legends Turnaj</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+</body>
