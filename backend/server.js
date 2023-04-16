@@ -52,7 +52,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(express.static('../frontend/static'));
+// app.use(express.static('../frontend/static'));
+// Trying to server via nginx
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.File({ filename: 'combined.log' }),
