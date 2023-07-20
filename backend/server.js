@@ -52,7 +52,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(express.static('../frontend/static'));
+// app.use(express.static('../frontend/static'));
+// Trying to server via nginx
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.File({ filename: 'combined.log' }),
@@ -87,3 +88,4 @@ app.use('/user', require('./routes/user'));
 app.use('/cr', require('./routes/cr'));
 app.use('/valorant', require('./routes/valorant'));
 app.use('/overwatch', require('./routes/ow'));
+app.use('/minecraft', require('./routes/minecraft'))
