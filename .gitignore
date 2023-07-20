@@ -1,2 +1,6 @@
 **/*.env
 .git
+**/*.log
+/backend/node_modules/*
+**/*.png
+**/*.jpg
